@@ -1,2360 +1,1824 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#635bff">
-  <title>وصلة — تواصل بلا تسجيل</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>تيك فوري | TikFawri - تواصل فوري دون لاق ولا تسجيل</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            tajawal: ['Tajawal', 'sans-serif'],
+          },
+          colors: {
+            tiktok: {
+              red: '#fe2c55',
+              cyan: '#25f4ee',
+              dark: '#121212',
+              black: '#050505',
+              card: '#181818',
+              hover: '#222222'
+            }
+          },
+          animation: {
+            'spin-slow': 'spin 5s linear infinite',
+            'float-heart': 'floatHeart 0.9s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'badge-glow': 'badgeGlow 1.5s infinite alternate',
+            'live-dot': 'liveDot 1.4s ease-in-out infinite',
+            'typing': 'typing 1.2s infinite',
+            'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'scroll-anim': 'scrollAnim 0.6s ease-out forwards',
+          },
+          keyframes: {
+            floatHeart: {
+              '0%': { opacity: '0', transform: 'scale(0.3) translateY(0) rotate(-15deg)' },
+              '40%': { opacity: '1', transform: 'scale(1.35) translateY(-25px) rotate(10deg)' },
+              '100%': { opacity: '0', transform: 'scale(1.8) translateY(-90px) rotate(-10deg)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { filter: 'drop-shadow(0 0 6px rgba(254, 44, 85, 0.6))' },
+              '50%': { filter: 'drop-shadow(0 0 16px rgba(37, 244, 238, 0.8))' }
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(100%)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            badgeGlow: {
+              '0%': { borderColor: '#fe2c55' },
+              '100%': { borderColor: '#25f4ee' }
+            },
+            liveDot: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.3', transform: 'scale(0.7)' }
+            },
+            typing: {
+              '0%, 100%': { opacity: '0.3' },
+              '50%': { opacity: '1' }
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-3px)' }
+            },
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(8px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.9)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            scrollAnim: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <style>
-    :root {
-      --primary: #635bff;
-      --primary-dark: #4d46d8;
-      --primary-soft: #eeedff;
-      --accent: #ff6b81;
-      --bg: #f5f6fa;
-      --surface: #ffffff;
-      --surface-2: #f8f9fc;
-      --text: #171827;
-      --muted: #73778a;
-      --border: #e7e8ef;
-      --success: #16a36a;
-      --danger: #ec4863;
-      --shadow: 0 12px 35px rgba(31, 35, 65, .07);
-      --radius: 20px;
-    }
-
-    html[data-theme="dark"] {
-      --bg: #0e0f16;
-      --surface: #171821;
-      --surface-2: #20212d;
-      --text: #f3f4fa;
-      --muted: #a4a7b7;
-      --border: #2a2c39;
-      --primary-soft: #29264f;
-      --shadow: 0 12px 35px rgba(0, 0, 0, .25);
-    }
-
     * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 90% 0, rgba(99, 91, 255, .09), transparent 25rem),
-        var(--bg);
-      font-family: Tahoma, "Segoe UI", Arial, sans-serif;
-      line-height: 1.65;
-      transition: background .25s, color .25s;
-    }
-
-    button, input, textarea {
-      font: inherit;
-    }
-
-    button {
-      color: inherit;
-    }
-
-    button, a {
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
-
-    button:focus-visible,
-    input:focus-visible,
-    textarea:focus-visible,
-    [tabindex]:focus-visible {
-      outline: 3px solid rgba(99, 91, 255, .25);
-      outline-offset: 2px;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
-    svg.icon {
-      width: 21px;
-      height: 21px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex: 0 0 auto;
-    }
-
-    .topbar {
-      position: fixed;
-      z-index: 100;
-      inset: 0 0 auto;
-      height: 72px;
-      border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      backdrop-filter: blur(18px);
-    }
-
-    .topbar-inner {
-      width: min(1240px, calc(100% - 30px));
-      height: 100%;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 290px minmax(280px, 520px) 260px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: max-content;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 39px;
-      height: 39px;
-      color: white;
-      border-radius: 13px;
-      background: linear-gradient(145deg, var(--primary), #8d61ff 70%, #ff7194);
-      box-shadow: 0 8px 20px rgba(99, 91, 255, .25);
-      transform: rotate(-4deg);
-    }
-
-    .brand-mark svg {
-      width: 23px;
-      height: 23px;
-    }
-
-    .top-search {
-      position: relative;
-    }
-
-    .top-search .icon {
-      position: absolute;
-      top: 50%;
-      right: 16px;
-      width: 19px;
-      color: var(--muted);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .top-search input,
-    .mobile-search input {
-      width: 100%;
-      height: 45px;
-      color: var(--text);
-      border: 1px solid transparent;
-      border-radius: 15px;
-      background: var(--surface-2);
-      padding: 0 47px 0 16px;
-      outline: 0;
-      transition: .2s;
-    }
-
-    .top-search input:focus,
-    .mobile-search input:focus {
-      border-color: rgba(99, 91, 255, .45);
-      background: var(--surface);
-      box-shadow: 0 0 0 4px rgba(99, 91, 255, .08);
-    }
-
-    .top-actions {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 9px;
-    }
-
-    .icon-btn {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: 43px;
-      height: 43px;
-      padding: 0;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-      transition: transform .2s, background .2s, color .2s;
-    }
-
-    .icon-btn:hover {
-      color: var(--primary);
-      background: var(--primary-soft);
-      transform: translateY(-2px);
-    }
-
-    .badge {
-      position: absolute;
-      top: -4px;
-      left: -4px;
-      min-width: 19px;
-      height: 19px;
-      padding: 0 5px;
-      color: white;
-      border: 2px solid var(--surface);
-      border-radius: 20px;
-      background: var(--danger);
-      font-size: 10px;
-      line-height: 15px;
-      text-align: center;
-    }
-
-    .guest-chip {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 104px;
-      padding: 5px 6px 5px 10px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: var(--surface);
-    }
-
-    .guest-chip strong {
-      display: block;
-      font-size: 12px;
-      line-height: 1.3;
-    }
-
-    .guest-chip small {
-      display: block;
-      color: var(--success);
-      font-size: 10px;
-    }
-
-    .avatar {
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-      width: 44px;
-      height: 44px;
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Tajawal', sans-serif;
       overflow: hidden;
-      color: white;
-      border-radius: 50%;
-      background: var(--avatar, linear-gradient(145deg, #7268ff, #ff7393));
-      font-size: 15px;
-      font-weight: 900;
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .25);
+      height: 100vh;
+      height: 100dvh;
     }
-
-    .avatar.small {
-      width: 36px;
-      height: 36px;
-      font-size: 12px;
+    /* Video Feed Container Snap Scroll */
+    .snap-y-mandatory {
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
     }
-
-    .avatar.large {
-      width: 64px;
-      height: 64px;
-      font-size: 21px;
+    .snap-start-item {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
-
-    .notifications-panel {
-      position: absolute;
-      top: 54px;
-      left: 0;
-      width: min(350px, calc(100vw - 28px));
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--surface);
-      box-shadow: var(--shadow);
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
     }
-
-    .panel-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 17px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .panel-title h3 {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .text-btn {
-      padding: 0;
-      color: var(--primary);
-      border: 0;
-      background: none;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .notification-item {
-      display: flex;
-      gap: 11px;
-      padding: 13px 16px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-    }
-
-    .notification-item:last-child {
-      border: 0;
-    }
-
-    .notification-item p {
-      margin: 0;
-    }
-
-    .notification-item time {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .layout {
-      width: min(1240px, calc(100% - 30px));
-      margin: 0 auto;
-      padding: 94px 0 42px;
-      display: grid;
-      direction: ltr;
-      grid-template-columns: 260px minmax(0, 620px) 290px;
-      justify-content: center;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .layout > * {
-      direction: rtl;
-    }
-
-    .side-column {
-      position: sticky;
-      top: 94px;
-      display: grid;
-      gap: 17px;
-    }
-
-    .card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: 0 5px 20px rgba(31, 35, 65, .035);
-    }
-
-    .side-card {
-      padding: 18px;
-    }
-
-    .side-card h3 {
-      margin: 0 0 14px;
-      font-size: 15px;
-    }
-
-    .profile-card {
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .profile-cover {
-      height: 72px;
-      background:
-        radial-gradient(circle at 22% 25%, rgba(255,255,255,.35) 0 5px, transparent 6px),
-        radial-gradient(circle at 75% 65%, rgba(255,255,255,.25) 0 8px, transparent 9px),
-        linear-gradient(135deg, #665dff, #a968ff 55%, #ff758e);
-    }
-
-    .profile-content {
-      padding: 0 18px 18px;
-    }
-
-    .profile-content .avatar {
-      margin: -32px auto 8px;
-      border: 4px solid var(--surface);
-    }
-
-    .profile-content h2 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .profile-content > p {
-      margin: 4px 0 14px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .profile-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      padding-top: 13px;
-      border-top: 1px solid var(--border);
-    }
-
-    .profile-stats div + div {
-      border-right: 1px solid var(--border);
-    }
-
-    .profile-stats strong,
-    .profile-stats span {
-      display: block;
-    }
-
-    .profile-stats strong {
-      font-size: 14px;
-    }
-
-    .profile-stats span {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .side-nav {
-      padding: 9px;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      padding: 11px 13px;
-      cursor: pointer;
-      color: var(--muted);
-      border: 0;
-      border-radius: 13px;
+    ::-webkit-scrollbar-track {
       background: transparent;
-      text-align: right;
-      font-size: 13px;
-      font-weight: 700;
-      transition: .2s;
     }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--primary);
-      background: var(--primary-soft);
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
     }
-
-    .nav-link .count {
-      margin-right: auto;
-      padding: 1px 7px;
-      color: white;
-      border-radius: 10px;
-      background: var(--primary);
-      font-size: 9px;
+    /* Glass Effect */
+    .glass-dark {
+      background: rgba(18, 18, 18, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
-
-    .privacy-note {
-      padding: 15px;
-      color: var(--muted);
-      border: 1px dashed rgba(22, 163, 106, .35);
-      border-radius: 16px;
-      background: color-mix(in srgb, var(--success) 7%, var(--surface));
-      font-size: 11px;
+    .glass-action {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
-    .privacy-note strong {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--success);
-      font-size: 12px;
+    /* TikTok Duo Shadow */
+    .tiktok-logo-shadow {
+      text-shadow: -2px 0px 0px #25f4ee, 2px 0px 0px #fe2c55;
     }
-
-    .privacy-note .icon {
-      width: 17px;
-      vertical-align: middle;
+    /* Video overlay gradient */
+    .video-gradient {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.4) 100%);
     }
-
-    .trend {
-      display: block;
-      width: 100%;
-      padding: 10px 0;
-      cursor: pointer;
-      border: 0;
-      border-bottom: 1px solid var(--border);
-      background: none;
-      text-align: right;
+    /* Disk rotate animation */
+    @keyframes musicDisk {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
-
-    .trend:last-child {
-      padding-bottom: 0;
-      border: 0;
+    .rotating-disc {
+      animation: musicDisk 4s linear infinite;
     }
-
-    .trend small,
-    .trend strong {
-      display: block;
+    .disc-paused {
+      animation-play-state: paused;
     }
-
-    .trend small {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .trend strong {
-      margin: 2px 0;
-      font-size: 13px;
-    }
-
-    .trend span {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .suggestion {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 13px;
-    }
-
-    .suggestion-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .suggestion-info strong,
-    .suggestion-info span {
-      display: block;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .suggestion-info strong {
-      font-size: 11px;
-    }
-
-    .suggestion-info span {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    .follow-btn {
-      padding: 6px 10px;
-      cursor: pointer;
-      color: var(--primary);
-      border: 1px solid rgba(99, 91, 255, .25);
-      border-radius: 10px;
-      background: var(--primary-soft);
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .follow-btn.following {
-      color: var(--muted);
-      border-color: var(--border);
-      background: var(--surface-2);
-    }
-
-    main {
-      min-width: 0;
-    }
-
-    .mobile-search {
-      position: relative;
-      display: none;
-      margin-bottom: 14px;
-    }
-
-    .mobile-search .icon {
+    /* Floating Heart on Double Tap */
+    .like-heart-bubble {
       position: absolute;
-      z-index: 1;
-      top: 50%;
-      right: 15px;
-      color: var(--muted);
-      transform: translateY(-50%);
+      pointer-events: none;
+      color: #fe2c55;
+      font-size: 5rem;
+      filter: drop-shadow(0 0 18px rgba(254, 44, 85, 0.8));
+      z-index: 50;
+      animation: floatHeart 0.85s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
     }
-
-    .stories {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding: 6px 2px 8px;
-      overflow-x: auto;
+    /* Live Badge Flashing */
+    .live-indicator {
+      animation: livePulse 1.2s infinite;
+    }
+    @keyframes livePulse {
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: scale(0.95);
+      }
+    }
+    /* Online dot pulse */
+    .online-dot {
+      animation: onlinePulse 2s ease-in-out infinite;
+    }
+    @keyframes onlinePulse {
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 244, 238, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(37, 244, 238, 0);
+      }
+    }
+    /* Typing indicator */
+    .typing-dot {
+      animation: typing 1.2s infinite;
+    }
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    /* User avatar placeholder gradient */
+    .avatar-gradient {
+      background: linear-gradient(135deg, #fe2c55, #25f4ee);
+    }
+    /* Smooth transitions */
+    .smooth-transition {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Online users scroll */
+    .online-scroll {
       scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-
-    .stories::-webkit-scrollbar {
+    .online-scroll::-webkit-scrollbar {
       display: none;
     }
-
-    .story {
-      flex: 0 0 67px;
-      padding: 0;
-      cursor: pointer;
-      border: 0;
-      background: none;
-      text-align: center;
+    /* Notification badge pulse */
+    .notification-pulse {
+      animation: notifPulse 2s ease-in-out infinite;
     }
-
-    .story-ring {
-      display: grid;
-      place-items: center;
-      width: 64px;
-      height: 64px;
-      margin: auto;
-      border-radius: 22px;
-      background: linear-gradient(145deg, var(--primary), #b766ff, #ff748d);
-      transition: transform .2s;
+    @keyframes notifPulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
     }
-
-    .story:hover .story-ring {
-      transform: translateY(-3px) rotate(2deg);
-    }
-
-    .story-ring .avatar {
-      width: 56px;
-      height: 56px;
-      border: 3px solid var(--surface);
-      border-radius: 18px;
-    }
-
-    .story.add .story-ring {
-      color: var(--primary);
-      border: 2px dashed rgba(99, 91, 255, .4);
-      background: var(--surface);
-    }
-
-    .story.add .icon {
-      width: 25px;
-      height: 25px;
-    }
-
-    .story span {
-      display: block;
-      margin-top: 5px;
-      overflow: hidden;
-      color: var(--muted);
-      font-size: 9px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .composer {
-      margin-bottom: 16px;
-      padding: 17px;
-    }
-
-    .composer-main {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-    }
-
-    .composer textarea {
-      width: 100%;
-      min-height: 46px;
-      max-height: 180px;
-      resize: none;
-      color: var(--text);
-      border: 1px solid transparent;
-      border-radius: 15px;
-      background: var(--surface-2);
-      padding: 11px 14px;
-      outline: none;
-      transition: .2s;
-    }
-
-    .composer textarea:focus {
-      border-color: rgba(99, 91, 255, .35);
-      background: var(--surface);
-    }
-
-    .composer-extra {
-      margin: 12px 55px 0 0;
-    }
-
-    .composer-preview {
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 10px;
-      border-radius: 15px;
-      background: var(--surface-2);
-    }
-
-    .composer-preview img {
-      display: block;
-      width: 100%;
-      max-height: 280px;
-      object-fit: cover;
-    }
-
-    .remove-preview {
+    /* Heart burst */
+    .heart-burst {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      display: grid;
-      place-items: center;
-      width: 31px;
-      height: 31px;
-      cursor: pointer;
-      color: white;
-      border: 0;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, .58);
-    }
-
-    .poll-builder {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 10px;
-      padding: 12px;
-      border-radius: 15px;
-      background: var(--surface-2);
-    }
-
-    .poll-builder input {
-      height: 39px;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: var(--surface);
-      padding: 0 12px;
-      outline: 0;
-    }
-
-    .poll-builder input:focus {
-      border-color: var(--primary);
-    }
-
-    .composer-footer {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding-top: 13px;
-      margin-top: 13px;
-      border-top: 1px solid var(--border);
-    }
-
-    .tool-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 10px;
-      cursor: pointer;
-      color: var(--muted);
-      border: 0;
-      border-radius: 11px;
-      background: transparent;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .tool-btn:hover,
-    .tool-btn.active {
-      color: var(--primary);
-      background: var(--primary-soft);
-    }
-
-    .tool-btn .icon {
-      width: 18px;
-    }
-
-    .publish-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-right: auto;
-    }
-
-    .char-count {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .primary-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      height: 38px;
-      padding: 0 18px;
-      cursor: pointer;
-      color: white;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary), #8464ff);
-      box-shadow: 0 7px 18px rgba(99, 91, 255, .22);
-      font-size: 12px;
-      font-weight: 800;
-      transition: .2s;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(99, 91, 255, .3);
-    }
-
-    .primary-btn:disabled {
-      cursor: not-allowed;
-      opacity: .45;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .feed-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 5px 2px 12px;
-    }
-
-    .feed-header h2 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .feed-tabs {
-      display: flex;
-      padding: 3px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-    }
-
-    .feed-tab {
-      padding: 6px 11px;
-      cursor: pointer;
-      color: var(--muted);
-      border: 0;
-      border-radius: 9px;
-      background: transparent;
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .feed-tab.active {
-      color: var(--primary);
-      background: var(--primary-soft);
-    }
-
-    #feed {
-      display: grid;
-      gap: 16px;
-    }
-
-    .post-card {
-      overflow: hidden;
-      animation: postIn .35s ease both;
-    }
-
-    @keyframes postIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: none; }
-    }
-
-    .post-head {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      padding: 16px 17px 8px;
-    }
-
-    .post-author {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .post-author strong {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-    }
-
-    .verified {
-      display: inline-grid;
-      place-items: center;
-      width: 15px;
-      height: 15px;
-      color: white;
-      border-radius: 50%;
-      background: var(--primary);
-      font-size: 9px;
-    }
-
-    .post-author span {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .more-btn {
-      width: 34px;
-      height: 34px;
-      color: var(--muted);
-      border: 0;
-      border-radius: 10px;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .more-btn:hover {
-      background: var(--surface-2);
-    }
-
-    .post-text {
-      margin: 4px 17px 13px;
-      font-size: 13px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .post-text .hashtag {
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    .post-media {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      background: var(--surface-2);
-    }
-
-    .post-media img {
-      display: block;
-      width: 100%;
-      max-height: 620px;
-      object-fit: cover;
-    }
-
-    .scenic-art {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-    }
-
-    .quote-art {
-      display: grid;
-      min-height: 250px;
-      place-items: center;
-      padding: 34px;
-      color: white;
-      background:
-        radial-gradient(circle at 14% 20%, rgba(255,255,255,.2) 0 5px, transparent 6px),
-        radial-gradient(circle at 83% 72%, rgba(255,255,255,.18) 0 9px, transparent 10px),
-        linear-gradient(145deg, #332e91, #7456ef 50%, #d35cb5);
-      text-align: center;
-    }
-
-    .quote-art blockquote {
-      max-width: 420px;
-      margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-      line-height: 1.8;
-    }
-
-    .quote-art blockquote:before {
-      content: "”";
-      display: block;
-      height: 40px;
-      color: rgba(255,255,255,.45);
-      font-family: Georgia, serif;
-      font-size: 70px;
-      line-height: .9;
-    }
-
-    .link-preview {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin: 0 17px 13px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--surface-2);
-    }
-
-    .link-icon {
-      display: grid;
-      place-items: center;
-      width: 55px;
-      height: 55px;
-      color: white;
-      border-radius: 15px;
-      background: linear-gradient(145deg, #1aa87a, #4bc2a1);
-    }
-
-    .link-preview strong,
-    .link-preview small {
-      display: block;
-    }
-
-    .link-preview strong {
-      font-size: 12px;
-    }
-
-    .link-preview small {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .poll {
-      display: grid;
-      gap: 8px;
-      margin: 0 17px 13px;
-    }
-
-    .poll-option {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      min-height: 45px;
-      padding: 0 13px;
-      cursor: pointer;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--surface-2);
-      text-align: right;
-    }
-
-    .poll-option:hover {
-      border-color: rgba(99, 91, 255, .45);
-    }
-
-    .poll-fill {
-      position: absolute;
-      inset: 0 0 0 auto;
-      width: var(--percent);
-      background: color-mix(in srgb, var(--primary) 15%, transparent);
-      transition: width .4s;
-    }
-
-    .poll-label {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .poll-note {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    .post-stats {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 17px;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-      font-size: 10px;
-    }
-
-    .post-actions {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 5px 8px;
-    }
-
-    .post-action {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px 5px;
-      cursor: pointer;
-      color: var(--muted);
-      border: 0;
-      border-radius: 11px;
-      background: transparent;
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .post-action:hover {
-      color: var(--primary);
-      background: var(--primary-soft);
-    }
-
-    .post-action.liked {
-      color: var(--danger);
-    }
-
-    .post-action.saved {
-      color: var(--primary);
-    }
-
-    .post-action .icon {
-      width: 18px;
-      height: 18px;
-    }
-
-    .post-action.liked .icon {
-      fill: currentColor;
-    }
-
-    .comments {
-      padding: 13px 17px 16px;
-      border-top: 1px solid var(--border);
-      background: var(--surface-2);
-    }
-
-    .comment {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 11px;
-    }
-
-    .comment-bubble {
-      padding: 7px 11px;
-      border-radius: 13px 4px 13px 13px;
-      background: var(--surface);
-      font-size: 10px;
-    }
-
-    .comment-bubble strong {
-      display: block;
-      font-size: 10px;
-    }
-
-    .comment-bubble p {
-      margin: 1px 0 0;
-    }
-
-    .comment-form {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .comment-form input {
-      min-width: 0;
-      height: 38px;
-      flex: 1;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      padding: 0 12px;
-      outline: 0;
-      font-size: 10px;
-    }
-
-    .comment-form input:focus {
-      border-color: var(--primary);
-    }
-
-    .send-comment {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      cursor: pointer;
-      color: white;
-      border: 0;
-      border-radius: 12px;
-      background: var(--primary);
-    }
-
-    .send-comment .icon {
-      width: 17px;
-    }
-
-    .empty-state {
-      padding: 48px 20px;
-      text-align: center;
-    }
-
-    .empty-state .icon {
-      width: 42px;
-      height: 42px;
-      margin-bottom: 10px;
-      color: var(--muted);
-    }
-
-    .empty-state h3 {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .empty-state p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .mobile-nav {
-      display: none;
-    }
-
-    .toast {
-      position: fixed;
-      z-index: 300;
-      right: 50%;
-      bottom: 25px;
-      padding: 11px 17px;
-      color: white;
-      border-radius: 13px;
-      background: #1f2130;
-      box-shadow: 0 12px 30px rgba(0,0,0,.2);
-      font-size: 11px;
-      transform: translate(50%, 20px);
-      opacity: 0;
       pointer-events: none;
-      transition: .25s;
+      z-index: 60;
     }
-
-    .toast.show {
-      transform: translate(50%, 0);
-      opacity: 1;
+    .heart-burst i {
+      animation: heartBurst 0.8s ease-out forwards;
     }
-
-    .modal {
-      position: fixed;
-      z-index: 250;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: rgba(10, 11, 18, .68);
-      backdrop-filter: blur(7px);
+    @keyframes heartBurst {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5) rotate(45deg);
+        opacity: 0;
+      }
     }
-
-    .story-view {
-      position: relative;
-      width: min(390px, 100%);
-      min-height: min(680px, calc(100vh - 40px));
-      overflow: hidden;
-      color: white;
-      border-radius: 28px;
-      background: linear-gradient(160deg, #5147da, #a74ee3 55%, #fa668c);
-      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    /* Mobile bottom safe area */
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-
-    .story-progress {
+    /* Scroll indicator for feed */
+    .feed-scroll-indicator {
       position: absolute;
-      z-index: 2;
-      top: 13px;
-      right: 14px;
-      left: 14px;
-      height: 3px;
-      overflow: hidden;
-      border-radius: 4px;
-      background: rgba(255,255,255,.3);
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      pointer-events: none;
     }
-
-    .story-progress span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: white;
-      transform-origin: right;
-      animation: storyProgress 6s linear;
+    /* Glow line for live sections */
+    .glow-line {
+      background: linear-gradient(90deg, transparent, #25f4ee, transparent);
+      height: 2px;
+      width: 80%;
+      margin: 0 auto;
+      border-radius: 999px;
+      opacity: 0.5;
     }
-
-    @keyframes storyProgress {
-      from { transform: scaleX(0); }
-      to { transform: scaleX(1); }
+    /* Avatar ring */
+    .avatar-ring {
+      box-shadow: 0 0 0 2px rgba(254, 44, 85, 0.4), 0 0 12px rgba(254, 44, 85, 0.2);
     }
-
-    .story-view-head {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 26px 17px 15px;
+    /* Comment fade in */
+    .comment-enter {
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-
-    .story-view-head strong {
-      font-size: 12px;
-    }
-
-    .story-view-head small {
-      display: block;
-      color: rgba(255,255,255,.7);
-      font-size: 9px;
-    }
-
-    .close-modal {
-      margin-right: auto;
-      padding: 6px;
-      cursor: pointer;
-      color: white;
-      border: 0;
-      background: none;
-    }
-
-    .story-body {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 80px 34px 40px;
-      text-align: center;
-    }
-
-    .story-body p {
-      max-width: 290px;
-      margin: 0;
-      font-size: 25px;
-      font-weight: 900;
-      line-height: 1.7;
-    }
-
-    .story-body .shape {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 40px;
-      transform: rotate(25deg);
-    }
-
-    @media (max-width: 1180px) {
-      .layout {
-        grid-template-columns: minmax(0, 620px) 290px;
+    /* Mobile card hover */
+    @media (hover: hover) {
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
       }
-
-      .left-column {
-        display: none;
+    }
+    /* Skeleton loading */
+    .skeleton {
+      background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.5s infinite;
+    }
+    @keyframes skeletonShimmer {
+      0% {
+        background-position: 200% 0;
       }
-
-      .topbar-inner {
-        grid-template-columns: 290px minmax(280px, 500px) 180px;
+      100% {
+        background-position: -200% 0;
+      }
+    }
+    /* Emoji reaction pop */
+    .emoji-pop {
+      animation: emojiPop 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards;
+    }
+    @keyframes emojiPop {
+      0% {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.3) rotate(5deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
       }
     }
 
-    @media (max-width: 850px) {
-      .layout {
-        width: min(620px, calc(100% - 24px));
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .right-column {
-        display: none;
-      }
-
-      .topbar-inner {
-        width: min(620px, calc(100% - 24px));
-        grid-template-columns: auto minmax(200px, 1fr) auto;
-        gap: 15px;
-      }
-
-      .guest-chip {
-        display: none;
-      }
-    }
-
-    @media (max-width: 650px) {
-      body {
-        padding-bottom: 72px;
-      }
-
-      .topbar {
-        height: 62px;
-      }
-
-      .topbar-inner {
-        grid-template-columns: 1fr auto;
-      }
-
-      .top-search {
-        display: none;
-      }
-
-      .brand {
-        font-size: 19px;
-      }
-
-      .brand-mark {
-        width: 35px;
-        height: 35px;
-        border-radius: 12px;
-      }
-
-      .top-actions .icon-btn:first-child {
-        display: none;
-      }
-
-      .layout {
-        width: 100%;
-        padding: 77px 10px 25px;
-      }
-
-      .mobile-search {
-        display: block;
-      }
-
-      .card {
-        border-radius: 17px;
-      }
-
-      .composer {
-        padding: 14px;
-      }
-
-      .composer-extra {
-        margin-right: 0;
-      }
-
-      .tool-btn span {
-        display: none;
-      }
-
-      .tool-btn {
-        padding: 8px;
-      }
-
-      .char-count {
-        display: none;
-      }
-
-      .primary-btn {
-        padding: 0 14px;
-      }
-
-      .post-head {
-        padding: 14px 14px 8px;
-      }
-
-      .post-text {
-        margin-right: 14px;
-        margin-left: 14px;
-      }
-
-      .post-action span {
-        display: none;
-      }
-
-      .post-action {
-        padding: 9px 4px;
-      }
-
-      .quote-art {
-        min-height: 220px;
-      }
-
-      .quote-art blockquote {
-        font-size: 18px;
-      }
-
-      .mobile-nav {
-        position: fixed;
-        z-index: 120;
-        right: 10px;
-        bottom: 10px;
-        left: 10px;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        height: 59px;
-        padding: 5px;
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        background: color-mix(in srgb, var(--surface) 92%, transparent);
-        box-shadow: 0 12px 35px rgba(25, 27, 50, .15);
-        backdrop-filter: blur(16px);
-      }
-
-      .mobile-nav button {
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        color: var(--muted);
-        border: 0;
-        border-radius: 14px;
-        background: transparent;
-      }
-
-      .mobile-nav button.active {
-        color: var(--primary);
-        background: var(--primary-soft);
-      }
-
-      .mobile-nav .add-post {
-        width: 46px;
-        height: 46px;
-        margin: 1px auto 0;
-        color: white;
-        border-radius: 15px;
-        background: linear-gradient(145deg, var(--primary), #8965ff);
-        box-shadow: 0 7px 17px rgba(99,91,255,.3);
-      }
-
-      .toast {
-        bottom: 82px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
   </style>
 </head>
-<body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M7 8.5h10a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4h-4.5L8 21v-3.5H7a4 4 0 0 1-4-4v-1a4 4 0 0 1 4-4Z"/><path d="M8 12h8M8 14.5h5"/></symbol>
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5.5 9.5V21h13V9.5M9.5 21v-6h5v6"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 15.3A9 9 0 0 1 8.7 3.5 9 9 0 1 0 20.5 15.3Z"/></symbol>
-    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
-    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></symbol>
-    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4Z"/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 15-4-4L5 20"/></symbol>
-    <symbol id="i-poll" viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></symbol>
-    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></symbol>
-    <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3v-7a4 4 0 0 1-1-2.6V7a4 4 0 0 1 4-4h11a4 4 0 0 1 4 4v8Z"/></symbol>
-    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></symbol>
-    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></symbol>
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
-    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></symbol>
-  </svg>
+<body class="h-full w-full flex flex-col md:flex-row bg-black select-none">
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="#" aria-label="وصلة">
-        <span class="brand-mark"><svg class="icon"><use href="#i-logo"></use></svg></span>
-        <span>وصلة</span>
-      </a>
-
-      <label class="top-search">
-        <svg class="icon"><use href="#i-search"></use></svg>
-        <input id="searchInput" type="search" placeholder="ابحث في المنشورات والوسوم..." aria-label="بحث">
-      </label>
-
-      <div class="top-actions">
-        <button class="icon-btn" id="themeBtn" type="button" aria-label="تبديل المظهر">
-          <svg class="icon"><use href="#i-moon"></use></svg>
-        </button>
-        <button class="icon-btn" id="notificationBtn" type="button" aria-label="الإشعارات">
-          <svg class="icon"><use href="#i-bell"></use></svg>
-          <span class="badge" id="notificationBadge">3</span>
-        </button>
-        <div class="guest-chip">
-          <div class="avatar small">ز</div>
-          <div><strong>زائر</strong><small>متصل الآن</small></div>
-        </div>
-
-        <div class="notifications-panel" id="notificationsPanel" hidden>
-          <div class="panel-title">
-            <h3>الإشعارات</h3>
-            <button class="text-btn" id="readAll" type="button">تحديد كمقروء</button>
-          </div>
-          <div class="notification-item">
-            <div class="avatar small" style="--avatar:linear-gradient(145deg,#ff8a65,#ef5350)">س</div>
-            <div><p><strong>سارة</strong> نشرت صورة جديدة قد تعجبك.</p><time>منذ 5 دقائق</time></div>
-          </div>
-          <div class="notification-item">
-            <div class="avatar small" style="--avatar:linear-gradient(145deg,#26a69a,#42a5f5)">ع</div>
-            <div><p><strong>عمر</strong> أضاف استطلاعاً جديداً.</p><time>منذ 20 دقيقة</time></div>
-          </div>
-          <div class="notification-item">
-            <div class="avatar small" style="--avatar:linear-gradient(145deg,#ab47bc,#7e57c2)">ك</div>
-            <div><p>لديك اقتراحات جديدة من مجتمع الكتاب.</p><time>منذ ساعة</time></div>
-          </div>
+  <!-- ================= TOP MOBILE BAR / DESKTOP HEADER ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-auto">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#fe2c55] to-[#25f4ee] flex items-center justify-center p-0.5 shadow-lg shadow-[#fe2c55]/20">
+        <div class="w-full h-full bg-black rounded-[10px] flex items-center justify-center">
+          <i class="fa-brands fa-tiktok text-white text-sm"></i>
         </div>
       </div>
+      <div class="flex flex-col">
+        <div class="flex items-center gap-1.5">
+          <span class="font-black text-lg tracking-wider tiktok-logo-shadow text-white">تيك فوري</span>
+          <span class="text-[9px] bg-tiktok-red text-white font-bold px-1.5 py-0.2 rounded-full uppercase">0 لاق</span>
+        </div>
+        <div class="flex items-center gap-1 text-[10px] text-white/50">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 online-dot"></span>
+          <span>أونلاين</span>
+          <span class="bg-white/10 px-1.5 py-0.2 rounded text-[9px] font-mono" id="onlineCount">184</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feed Switcher -->
+    <div class="flex items-center gap-4 text-sm font-bold absolute left-1/2 -translate-x-1/2">
+      <button onclick="switchTab('following')" id="tabFollowing" class="text-white/60 hover:text-white transition py-1 relative">اتابعهم</button>
+      <span class="text-white/30 text-xs">|</span>
+      <button onclick="switchTab('foryou')" id="tabForYou" class="text-white font-black text-base transition py-1 relative">
+        لك <span class="text-[10px] text-white/50 font-normal">(FYP)</span>
+        <span class="absolute bottom-0 right-1/2 translate-x-1/2 w-4 h-0.5 bg-tiktok-red rounded-full"></span>
+      </button>
+      <span class="text-white/30 text-xs">|</span>
+      <button onclick="switchTab('live')" id="tabLive" class="text-white/60 hover:text-white transition py-1 flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-red-500 live-indicator"></span>
+        بث مباشر
+      </button>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-2.5">
+      <!-- Live User Count -->
+      <div class="hidden sm:flex items-center gap-1.5 bg-tiktok-cyan/10 border border-tiktok-cyan/30 text-tiktok-cyan text-xs px-2.5 py-1 rounded-full font-mono font-bold">
+        <span class="w-2 h-2 rounded-full bg-tiktok-cyan animate-pulse"></span>
+        <span><i class="fa-solid fa-users mr-1"></i><span id="liveUserCount">12</span> أونلاين</span>
+      </div>
+      <!-- Notifications -->
+      <button onclick="openNotifications()" class="relative p-2 text-white/60 hover:text-white transition smooth-transition">
+        <i class="fa-regular fa-bell text-lg"></i>
+        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-tiktok-red text-white text-[9px] font-bold rounded-full flex items-center justify-center notification-pulse">3</span>
+      </button>
+      <!-- User Instant Profile -->
+      <button onclick="openProfileModal()" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full py-1 px-2.5 transition text-xs font-medium smooth-transition">
+        <span id="headerAvatar" class="w-6 h-6 rounded-full avatar-gradient flex items-center justify-center text-white text-xs font-bold avatar-ring">ك</span>
+        <span id="headerUsername" class="max-w-[70px] sm:max-w-[100px] truncate text-white">كريم_أونلاين</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 online-dot"></span>
+      </button>
     </div>
   </header>
 
-  <div class="layout">
-    <aside class="side-column left-column">
-      <section class="card side-card">
-        <h3>الأكثر تداولاً 🔥</h3>
-        <button class="trend" type="button" data-trend="#التصوير">
-          <small>فن وإبداع</small><strong>#التصوير</strong><span>1.8 ألف منشور</span>
-        </button>
-        <button class="trend" type="button" data-trend="#تطوير_الذات">
-          <small>مجتمع</small><strong>#تطوير_الذات</strong><span>942 منشوراً</span>
-        </button>
-        <button class="trend" type="button" data-trend="#كتب">
-          <small>ثقافة</small><strong>#كتب</strong><span>710 منشورات</span>
-        </button>
-        <button class="trend" type="button" data-trend="#تقنية">
-          <small>تقنية</small><strong>#تقنية</strong><span>563 منشوراً</span>
-        </button>
-      </section>
-
-      <section class="card side-card">
-        <h3>أشخاص قد يعجبونك</h3>
-        <div class="suggestion">
-          <div class="avatar small" style="--avatar:linear-gradient(145deg,#ec407a,#ff8a65)">ل</div>
-          <div class="suggestion-info"><strong>ليان منصور</strong><span>مصممة واجهات</span></div>
-          <button class="follow-btn" type="button">متابعة</button>
+  <!-- ================= DESKTOP SIDE NAVIGATION ================= -->
+  <aside class="hidden md:flex flex-col justify-between w-64 h-full border-l border-white/10 bg-tiktok-dark/80 p-4 z-30 shrink-0">
+    <div class="space-y-6 pt-16">
+      <!-- Quick Info -->
+      <div class="p-3 bg-gradient-to-r from-tiktok-red/15 to-tiktok-cyan/15 rounded-2xl border border-white/10">
+        <div class="flex items-center gap-2 text-xs font-bold text-white mb-1">
+          <i class="fa-solid fa-bolt text-yellow-400"></i>
+          أونلاين · بدون تسجيل · فوراً
         </div>
-        <div class="suggestion">
-          <div class="avatar small" style="--avatar:linear-gradient(145deg,#26c6da,#5c6bc0)">م</div>
-          <div class="suggestion-info"><strong>محمد ناصر</strong><span>صانع محتوى</span></div>
-          <button class="follow-btn" type="button">متابعة</button>
+        <p class="text-[11px] text-white/70 leading-relaxed">
+          تصفح وانشر وتفاعل مع مجتمع حيوي أونلاين بدون الح need حساب.
+          تفاعل لحظي مع <span id="sidebarOnlineCount">184</span> مشترك أونلاين الآن.
+        </p>
+      </div>
+
+      <!-- Online Users Mini List -->
+      <div class="p-3 bg-white/5 rounded-2xl border border-white/5">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-white/80"><i class="fa-solid fa-circle text-[8px] text-tiktok-cyan mr-1.5"></i>أونلاين الآن</span>
+          <span class="text-[10px] text-white/40 bg-white/5 px-1.5 py-0.5 rounded-full" id="miniOnlineCount">12 نشط</span>
         </div>
-        <div class="suggestion">
-          <div class="avatar small" style="--avatar:linear-gradient(145deg,#66bb6a,#26a69a)">ر</div>
-          <div class="suggestion-info"><strong>ريم سالم</strong><span>مصورة</span></div>
-          <button class="follow-btn" type="button">متابعة</button>
-        </div>
-      </section>
-    </aside>
-
-    <main>
-      <label class="mobile-search">
-        <svg class="icon"><use href="#i-search"></use></svg>
-        <input id="mobileSearch" type="search" placeholder="ابحث في وصلة..." aria-label="بحث">
-      </label>
-
-      <section class="stories" aria-label="القصص">
-        <button class="story add" id="addStory" type="button">
-          <span class="story-ring"><svg class="icon"><use href="#i-plus"></use></svg></span>
-          <span>قصتك</span>
-        </button>
-        <button class="story" type="button" data-story="سارة" data-story-text="أجمل اللحظات تبدأ بخطوة صغيرة ✨">
-          <span class="story-ring"><span class="avatar" style="--avatar:linear-gradient(145deg,#ff8a65,#ef5350)">س</span></span>
-          <span>سارة</span>
-        </button>
-        <button class="story" type="button" data-story="عمر" data-story-text="صباح جديد، فرصة جديدة لصنع شيء رائع.">
-          <span class="story-ring"><span class="avatar" style="--avatar:linear-gradient(145deg,#26a69a,#42a5f5)">ع</span></span>
-          <span>عمر</span>
-        </button>
-        <button class="story" type="button" data-story="ليان" data-story-text="التصميم الجيد بسيط، واضح، وقريب من الناس.">
-          <span class="story-ring"><span class="avatar" style="--avatar:linear-gradient(145deg,#ec407a,#ff8a65)">ل</span></span>
-          <span>ليان</span>
-        </button>
-        <button class="story" type="button" data-story="يوسف" data-story-text="أشارككم اليوم أداة تقنية خفيفة ومفيدة جداً 🚀">
-          <span class="story-ring"><span class="avatar" style="--avatar:linear-gradient(145deg,#5c6bc0,#7e57c2)">ي</span></span>
-          <span>يوسف</span>
-        </button>
-        <button class="story" type="button" data-story="ريم" data-story-text="ضوء الغروب لا يحتاج إلى أي فلتر 🌅">
-          <span class="story-ring"><span class="avatar" style="--avatar:linear-gradient(145deg,#66bb6a,#26a69a)">ر</span></span>
-          <span>ريم</span>
-        </button>
-      </section>
-
-      <section class="card composer" id="composer">
-        <div class="composer-main">
-          <div class="avatar">ز</div>
-          <textarea id="postText" maxlength="280" rows="1" placeholder="بماذا تفكر؟ شاركنا الآن..." aria-label="نص المنشور"></textarea>
-        </div>
-
-        <div class="composer-extra">
-          <div class="composer-preview" id="composerPreview" hidden>
-            <img id="previewImage" alt="معاينة الصورة">
-            <button class="remove-preview" id="removeImage" type="button" aria-label="حذف الصورة">
-              <svg class="icon"><use href="#i-x"></use></svg>
-            </button>
-          </div>
-
-          <div class="poll-builder" id="pollBuilder" hidden>
-            <input class="poll-input" maxlength="60" placeholder="الخيار الأول">
-            <input class="poll-input" maxlength="60" placeholder="الخيار الثاني">
-          </div>
-        </div>
-
-        <div class="composer-footer">
-          <input id="imageInput" type="file" accept="image/*" hidden>
-          <button class="tool-btn" id="attachImage" type="button">
-            <svg class="icon"><use href="#i-image"></use></svg><span>صورة</span>
-          </button>
-          <button class="tool-btn" id="togglePoll" type="button">
-            <svg class="icon"><use href="#i-poll"></use></svg><span>استطلاع</span>
-          </button>
-          <div class="publish-wrap">
-            <span class="char-count"><b id="charCount">0</b>/280</span>
-            <button class="primary-btn" id="publishBtn" type="button" disabled>
-              نشر <svg class="icon"><use href="#i-send"></use></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <div class="feed-header">
-        <h2 id="feedTitle">آخر المنشورات</h2>
-        <div class="feed-tabs">
-          <button class="feed-tab active" type="button" data-sort="recent">الأحدث</button>
-          <button class="feed-tab" type="button" data-sort="popular">الأبرز</button>
+        <div class="space-y-1.5 max-h-[140px] overflow-y-auto online-scroll pr-1" id="onlineUsersMiniList">
+          <!-- Dynamically populated -->
         </div>
       </div>
 
-      <section id="feed" aria-live="polite"></section>
-    </main>
-
-    <aside class="side-column right-column">
-      <section class="card profile-card">
-        <div class="profile-cover"></div>
-        <div class="profile-content">
-          <div class="avatar large">ز</div>
-          <h2>زائر وصلة</h2>
-          <p>انشر وتفاعل فوراً، دون إنشاء حساب.</p>
-          <div class="profile-stats">
-            <div><strong id="guestPostCount">0</strong><span>منشور</span></div>
-            <div><strong id="savedCount">0</strong><span>محفوظ</span></div>
-          </div>
-        </div>
-      </section>
-
-      <nav class="card side-nav" aria-label="التنقل">
-        <button class="nav-link active" type="button" data-view="home">
-          <svg class="icon"><use href="#i-home"></use></svg>الرئيسية
+      <!-- Menu Items -->
+      <nav class="space-y-1">
+        <button onclick="switchTab('foryou')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10 text-white font-bold text-sm transition smooth-transition">
+          <i class="fa-solid fa-house text-tiktok-red text-lg"></i>
+          الصفحة الرئيسية
         </button>
-        <button class="nav-link" type="button" data-view="popular">
-          <svg class="icon"><use href="#i-compass"></use></svg>استكشف
+        <button onclick="openDiscoverModal()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white font-semibold text-sm transition smooth-transition">
+          <i class="fa-solid fa-compass text-tiktok-cyan text-lg"></i>
+          استكشف الأصوات والتريند
         </button>
-        <button class="nav-link" type="button" data-view="saved">
-          <svg class="icon"><use href="#i-bookmark"></use></svg>المحفوظات
+        <button onclick="openUploadModal()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white font-semibold text-sm transition smooth-transition">
+          <i class="fa-solid fa-square-plus text-yellow-400 text-lg"></i>
+          إنشاء ونشر فيديو فوري
         </button>
-        <button class="nav-link" type="button" id="sideNotifications">
-          <svg class="icon"><use href="#i-bell"></use></svg>الإشعارات <span class="count">3</span>
+        <button onclick="openProfileModal()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white font-semibold text-sm transition smooth-transition">
+          <i class="fa-solid fa-user text-white text-lg"></i>
+          ملفك أونلاين
+          <span class="ml-auto w-2 h-2 rounded-full bg-emerald-400 online-dot"></span>
+        </button>
+        <button onclick="openMessages()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white font-semibold text-sm transition smooth-transition">
+          <i class="fa-regular fa-comment-dots text-tiktok-cyan text-lg"></i>
+          الرسائل المباشرة
+          <span class="ml-auto bg-tiktok-red text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">4</span>
+        </button>
+        <button onclick="openNotifications()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-white font-semibold text-sm transition smooth-transition">
+          <i class="fa-regular fa-bell text-white text-lg"></i>
+          الإشعارات
+          <span class="ml-auto bg-tiktok-red text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full notification-pulse">3</span>
         </button>
       </nav>
 
-      <div class="privacy-note">
-        <strong><svg class="icon"><use href="#i-lock"></use></svg> بلا تسجيل دخول</strong>
-        لا نجمع بيانات شخصية. منشوراتك وتفاعلاتك تحفظ محلياً على جهازك.
+      <!-- Trending Hashtags -->
+      <div class="p-3 bg-white/5 rounded-2xl border border-white/5">
+        <div class="text-xs font-bold text-white/60 mb-2"><i class="fa-solid fa-fire text-tiktok-red mr-1.5"></i>التريند الآن</div>
+        <div class="flex flex-wrap gap-1.5">
+          <span class="text-[11px] bg-tiktok-red/20 text-tiktok-red px-2 py-0.5 rounded-full font-medium">#فوري</span>
+          <span class="text-[11px] bg-tiktok-cyan/20 text-tiktok-cyan px-2 py-0.5 rounded-full font-medium">#تيكفوري</span>
+          <span class="text-[11px] bg-white/10 text-white/70 px-2 py-0.5 rounded-full font-medium">#أونلاين</span>
+          <span class="text-[11px] bg-white/10 text-white/70 px-2 py-0.5 rounded-full font-medium">#بدون_حساب</span>
+        </div>
       </div>
-    </aside>
-  </div>
+    </div>
 
-  <nav class="mobile-nav" aria-label="التنقل السريع">
-    <button class="active" type="button" data-view="home" aria-label="الرئيسية"><svg class="icon"><use href="#i-home"></use></svg></button>
-    <button type="button" data-view="popular" aria-label="استكشف"><svg class="icon"><use href="#i-compass"></use></svg></button>
-    <button class="add-post" id="mobileAdd" type="button" aria-label="منشور جديد"><svg class="icon"><use href="#i-plus"></use></svg></button>
-    <button type="button" id="mobileNotifications" aria-label="الإشعارات"><svg class="icon"><use href="#i-bell"></use></svg></button>
-    <button type="button" data-view="saved" aria-label="المحفوظات"><svg class="icon"><use href="#i-bookmark"></use></svg></button>
-  </nav>
-
-  <div class="modal" id="storyModal" hidden>
-    <div class="story-view" role="dialog" aria-modal="true" aria-label="عرض القصة">
-      <div class="story-progress"><span id="storyProgress"></span></div>
-      <div class="story-view-head">
-        <div class="avatar small" id="storyAvatar">و</div>
-        <div><strong id="storyName">وصلة</strong><small>الآن</small></div>
-        <button class="close-modal" id="closeStory" type="button" aria-label="إغلاق">
-          <svg class="icon"><use href="#i-x"></use></svg>
+    <!-- Bottom user info -->
+    <div class="space-y-2 pt-4 border-t border-white/10">
+      <div class="flex items-center gap-3 p-2 rounded-xl bg-white/5">
+        <span class="w-9 h-9 rounded-full avatar-gradient flex items-center justify-center text-white text-sm font-bold avatar-ring">ك</span>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-bold text-white truncate">كريم_أونلاين</div>
+          <div class="text-[10px] text-emerald-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 online-dot"></span>
+            أونلاين الآن
+          </div>
+        </div>
+        <button onclick="openProfileModal()" class="text-white/50 hover:text-white transition smooth-transition">
+          <i class="fa-solid fa-chevron-right text-xs"></i>
         </button>
       </div>
-      <div class="story-body">
-        <span class="shape"></span>
-        <p id="storyText"></p>
+      <button class="w-full py-2 text-[11px] text-white/40 hover:text-white/70 transition rounded-xl bg-white/5 hover:bg-white/10 smooth-transition">
+        <i class="fa-solid fa-gear mr-1.5"></i>إعدادات سريعة
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN FEED AREA ================= -->
+  <main class="flex-1 flex flex-col min-h-0 md:min-h-full">
+    <!-- Tab Content Container -->
+    <div id="tabContent" class="flex-1 overflow-y-auto snap-y-mandatory relative">
+
+      <!-- Loading skeleton (shown briefly) -->
+      <div id="feedSkeleton" class="absolute inset-0 z-20 flex items-center justify-center bg-black/80 backdrop-blur-sm" style="display:none;">
+        <div class="flex flex-col gap-4 w-full max-w-sm mx-4">
+          <div class="skeleton h-[300px] rounded-2xl"></div>
+          <div class="skeleton h-4 w-3/4 rounded-lg"></div>
+          <div class="skeleton h-3 w-1/2 rounded-lg"></div>
+        </div>
+      </div>
+
+      <!-- ===== FOR YOU FEED ===== -->
+      <div id="feedFYP" class="snap-y-mandatory h-full overflow-y-auto">
+        <!-- Video cards will be injected here by JS -->
+      </div>
+
+      <!-- ===== FOLLOWING FEED ===== -->
+      <div id="feedFollowing" class="snap-y-mandatory h-full overflow-y-auto hidden">
+        <!-- Following cards injected by JS -->
+      </div>
+
+      <!-- ===== LIVE FEED ===== -->
+      <div id="feedLive" class="h-full overflow-y-auto hidden">
+        <!-- Live stream cards injected by JS -->
+      </div>
+
+      <!-- Double-tap heart floating element -->
+      <div id="doubleTapHeart" class="like-heart-bubble" style="display:none;">
+        <i class="fa-solid fa-heart"></i>
+      </div>
+    </div>
+
+    <!-- ================= BOTTOM ACTION BAR (MOBILE) ================= -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/90 via-black/50 to-transparent safe-bottom md:hidden pointer-events-none">
+      <div class="flex items-center justify-around py-2 px-4 pointer-events-auto bg-black/40 backdrop-blur-xl border-t border-white/10">
+        <button onclick="handleLike()" class="flex flex-col items-center gap-0.5 text-white/80 hover:text-tiktok-red transition smooth-transition">
+          <i class="fa-solid fa-heart text-xl"></i>
+          <span class="text-[10px] text-white/40" id="mobileLikeCount">0</span>
+        </button>
+        <button onclick="openComments()" class="flex flex-col items-center gap-0.5 text-white/80 hover:text-tiktok-cyan transition smooth-transition">
+          <i class="fa-solid fa-comment text-xl"></i>
+          <span class="text-[10px] text-white/40" id="mobileCommentCount">0</span>
+        </button>
+        <button onclick="handleShare()" class="flex flex-col items-center gap-0.5 text-white/80 hover:text-yellow-400 transition smooth-transition">
+          <i class="fa-solid fa-paper-plane text-xl"></i>
+          <span class="text-[10px] text-white/40">مشاركة</span>
+        </button>
+        <button onclick="handleProfile()" class="flex flex-col items-center gap-0.5 text-white/80 hover:text-white transition smooth-transition">
+          <i class="fa-regular fa-user text-xl"></i>
+          <span class="text-[10px] text-white/40">حساب</span>
+        </button>
+        <button onclick="handleSound()" class="flex flex-col items-center gap-0.5 text-white/80 hover:text-yellow-400 transition smooth-transition">
+          <i class="fa-solid fa-music text-xl"></i>
+          <span class="text-[10px] text-white/40">صوت</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= DESKTOP BOTTOM ACTIONS ================= -->
+    <div class="hidden md:flex fixed bottom-0 left-0 right-0 z-40 bg-tiktok-dark/90 backdrop-blur-xl border-t border-white/10 px-6 py-3 items-center justify-center gap-8 pointer-events-none">
+      <button onclick="handleLike()" class="flex items-center gap-2 text-white/80 hover:text-tiktok-red transition smooth-transition pointer-events-auto">
+        <i class="fa-solid fa-heart text-2xl"></i>
+        <span class="text-sm font-bold text-white/60" id="desktopLikeCount">0</span>
+      </button>
+      <button onclick="openComments()" class="flex items-center gap-2 text-white/80 hover:text-tiktok-cyan transition smooth-transition pointer-events-auto">
+        <i class="fa-solid fa-comment text-2xl"></i>
+        <span class="text-sm font-bold text-white/60" id="desktopCommentCount">0</span>
+      </button>
+      <button onclick="handleShare()" class="flex items-center gap-2 text-white/80 hover:text-yellow-400 transition smooth-transition pointer-events-auto">
+        <i class="fa-solid fa-paper-plane text-2xl"></i>
+        <span class="text-sm font-bold text-white/60">مشاركة</span>
+      </button>
+      <button onclick="handleSave()" class="flex items-center gap-2 text-white/80 hover:text-white transition smooth-transition pointer-events-auto">
+        <i class="fa-solid fa-bookmark text-2xl"></i>
+        <span class="text-sm font-bold text-white/60">حفظ</span>
+      </button>
+      <button onclick="handleSound()" class="flex items-center gap-2 text-white/80 hover:text-yellow-400 transition smooth-transition pointer-events-auto">
+        <i class="fa-solid fa-music text-2xl"></i>
+        <span class="text-sm font-bold text-white/60">صوت</span>
+      </button>
+      <button onclick="openProfileModal()" class="flex items-center gap-2 text-white/80 hover:text-white transition smooth-transition pointer-events-auto ml-4">
+        <span class="w-8 h-8 rounded-full avatar-gradient flex items-center justify-center text-white text-sm font-bold avatar-ring">ك</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- ================= OVERLAY: COMMENTS ================= -->
+  <div id="commentsOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-end md:items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-lg max-h-[80vh] bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden animate-scale-in">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-comment text-tiktok-cyan text-xl"></i>
+          <span class="font-bold text-white text-lg">التعليقات</span>
+          <span class="text-sm text-white/40 font-mono" id="commentTotalCount">0</span>
+        </div>
+        <button onclick="closeComments()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <!-- Comment List -->
+      <div id="commentList" class="flex-1 overflow-y-auto px-5 py-3 space-y-3">
+        <!-- Will be populated by JS -->
+      </div>
+      <!-- Input -->
+      <div class="flex items-center gap-3 px-5 py-4 border-t border-white/10 bg-black/40">
+        <button class="text-white/40 hover:text-white transition smooth-transition p-1">
+          <i class="fa-regular fa-face-smile text-xl"></i>
+        </button>
+        <input type="text" id="commentInput" placeholder="اكتب تعليقك..." class="flex-1 bg-white/10 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-tiktok-cyan/40 smooth-transition" />
+        <button onclick="postComment()" class="bg-tiktok-red hover:bg-tiktok-red/80 text-white rounded-full px-5 py-2 text-sm font-bold smooth-transition">
+          إرسال
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- ================= OVERLAY: PROFILE MODAL ================= -->
+  <div id="profileOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-sm bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl overflow-hidden animate-scale-in">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <span class="font-bold text-white text-lg">ملفك أونلاين</span>
+        <button onclick="closeProfile()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <!-- Avatar & Name -->
+      <div class="flex flex-col items-center py-6 px-5">
+        <div class="w-20 h-20 rounded-full avatar-gradient flex items-center justify-center text-white text-3xl font-bold avatar-ring mb-4">
+          ك
+        </div>
+        <div class="text-2xl font-black text-white">كريم_أونلاين</div>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 online-dot"></span>
+          <span class="text-sm text-emerald-400 font-medium">أونلاين الآن</span>
+        </div>
+        <div class="mt-4 flex gap-4 text-center">
+          <div class="text-center">
+            <div class="text-xl font-bold text-white" id="profileFollowing">42</div>
+            <div class="text-xs text-white/40">يتابعهم</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl font-bold text-white" id="profileFollowers">1.2ألف</div>
+            <div class="text-xs text-white/40">متابع</div>
+          </div>
+          <div class="text-center">
+            <div class="text-xl font-bold text-white" id="profileLikes">8.4ألف</div>
+            <div class="text-xs text-white/40">إعجاب</div>
+          </div>
+        </div>
+      </div>
+      <!-- Bio -->
+      <div class="px-5 py-4 border-t border-white/5">
+        <div class="text-sm text-white/70 leading-relaxed">
+          مجرد مستخدم أونلاين يشارك اللحظة. لا ح حساب، لا لاق، فقط تواصل فوري!
+          <span class="text-tiktok-cyan">⚡</span>
+        </div>
+      </div>
+      <!-- Action buttons -->
+      <div class="flex gap-2 px-5 py-4 border-t border-white/5">
+        <button class="flex-1 bg-tiktok-red/20 hover:bg-tiktok-red/30 text-tiktok-red border border-tiktok-red/30 rounded-full py-2 text-sm font-bold smooth-transition">
+          <i class="fa-solid fa-pen mr-1.5"></i>تعديل الملف
+        </button>
+        <button class="flex-1 bg-white/5 hover:bg-white/10 text-white/80 rounded-full py-2 text-sm font-bold smooth-transition">
+          <i class="fa-solid fa-arrow-right-from-bracket mr-1.5"></i>تسجيل خروج
+        </button>
+      </div>
+    </div>
+  </div>
 
+  <!-- ================= OVERLAY: NOTIFICATIONS ================= -->
+  <div id="notificationsOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-end md:items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-lg max-h-[70vh] bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden animate-scale-in">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <span class="font-bold text-white text-lg"><i class="fa-regular fa-bell text-tiktok-red mr-2"></i>الإشعارات</span>
+        <button onclick="closeNotifications()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div id="notificationList" class="flex-1 overflow-y-auto px-5 py-3 space-y-3">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY: DISCOVER ================= -->
+  <div id="discoverOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-sm bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl overflow-hidden animate-scale-in">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <span class="font-bold text-white text-lg"><i class="fa-solid fa-compass text-tiktok-cyan mr-2"></i>استكشف</span>
+        <button onclick="closeDiscover()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-white/30 text-lg"></i>
+          <input type="text" placeholder="ابحث عن فيديو أو صوت..." class="w-full bg-white/10 border border-white/10 rounded-xl pl-4 pr-12 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-tiktok-cyan/40 smooth-transition" />
+        </div>
+        <div class="text-xs font-bold text-white/50 uppercase tracking-wider">الصوتيات الشهيرة</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white/5 rounded-xl p-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <div class="text-xs text-white/70">#صوت_تريند</div>
+            <div class="text-lg font-bold text-white mt-1">12.5ألف</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <div class="text-xs text-white/70">#رقص_فوري</div>
+            <div class="text-lg font-bold text-white mt-1">8.3ألف</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <div class="text-xs text-white/70">#كوميديا</div>
+            <div class="text-lg font-bold text-white mt-1">6.7ألف</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <div class="text-xs text-white/70">#موسيقى_عالمية</div>
+            <div class="text-lg font-bold text-white mt-1">9.1ألف</div>
+          </div>
+        </div>
+        <div class="text-xs font-bold text-white/50 uppercase tracking-wider">التريند الآن</div>
+        <div class="space-y-2">
+          <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <span class="text-[11px] bg-tiktok-red/20 text-tiktok-red px-2 py-0.5 rounded-full font-medium">#فوري</span>
+            <span class="text-sm text-white/70">245 ألف فيديو</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <span class="text-[11px] bg-tiktok-cyan/20 text-tiktok-cyan px-2 py-0.5 rounded-full font-medium">#أونلاين</span>
+            <span class="text-sm text-white/70">89 ألف فيديو</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3 border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+            <span class="text-[11px] bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full font-medium">#بدون_تأخير</span>
+            <span class="text-sm text-white/70">42 ألف فيديو</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY: MESSAGES ================= -->
+  <div id="messagesOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-end md:items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-lg max-h-[75vh] bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden animate-scale-in">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <span class="font-bold text-white text-lg"><i class="fa-regular fa-comment-dots text-tiktok-cyan mr-2"></i>الرسائل</span>
+        <button onclick="closeMessages()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto px-5 py-3 space-y-3" id="messageList">
+        <!-- Populated by JS -->
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4 border-t border-white/10 bg-black/40">
+        <button class="text-white/40 hover:text-white transition smooth-transition p-1">
+          <i class="fa-regular fa-face-smile text-xl"></i>
+        </button>
+        <input type="text" placeholder="اكتب رسالة..." class="flex-1 bg-white/10 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-tiktok-cyan/40 smooth-transition" />
+        <button class="bg-tiktok-cyan/20 hover:bg-tiktok-cyan/30 text-tiktok-cyan rounded-full px-4 py-2 text-sm font-bold smooth-transition border border-tiktok-cyan/30">
+          إرسال
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY: UPLOAD ================= -->
+  <div id="uploadOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-lg flex items-center justify-center hidden" style="display:none;">
+    <div class="w-full max-w-sm bg-tiktok-card rounded-2xl border border-white/10 shadow-2xl overflow-hidden animate-scale-in">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <span class="font-bold text-white text-lg"><i class="fa-solid fa-square-plus text-yellow-400 mr-2"></i>إنشاء فيديو فوري</span>
+        <button onclick="closeUpload()" class="text-white/50 hover:text-white transition smooth-transition p-1">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-6 flex flex-col items-center justify-center min-h-[250px] bg-white/5 rounded-b-2xl">
+        <div class="w-16 h-16 rounded-full bg-tiktok-red/20 border border-tiktok-red/30 flex items-center justify-center mb-4 smooth-transition hover:bg-tiktok-red/30 cursor-pointer">
+          <i class="fa-solid fa-cloud-arrow-up text-tiktok-red text-2xl"></i>
+        </div>
+        <span class="text-lg font-bold text-white">ارفع فيديو أو صورة</span>
+        <span class="text-sm text-white/40 mt-1">سيتم نشره فوراً لأونلاين</span>
+        <div class="mt-6 w-full bg-white/5 rounded-xl p-4 border border-dashed border-white/10 text-center">
+          <div class="text-xs text-white/40 mb-1">أو اختر فيديو من</div>
+          <div class="flex gap-2">
+            <button class="flex-1 bg-tiktok-cyan/20 hover:bg-tiktok-cyan/30 text-tiktok-cyan rounded-full py-2 text-sm font-bold smooth-transition border border-tiktok-cyan/30">
+              <i class="fa-solid fa-microphone mr-1.5"></i>صوت
+            </button>
+            <button class="flex-1 bg-tiktok-red/20 hover:bg-tiktok-red/30 text-tiktok-red rounded-full py-2 text-sm font-bold smooth-transition border border-tiktok-red/30">
+              <i class="fa-solid fa-video mr-1.5"></i>فيديو
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
-    (() => {
-      const STORAGE_KEY = "wasla_posts_v1";
-      const THEME_KEY = "wasla_theme";
-      const openComments = new Set();
-      let currentView = "home";
-      let currentSort = "recent";
-      let searchTerm = "";
-      let pendingImage = "";
-      let pollMode = false;
-      let toastTimer;
+    // ========================
+    // STATE & DATA
+    // ========================
+    const state = {
+      currentTab: 'foryou',
+      currentVideoIndex: 0,
+      likes: 0,
+      comments: [],
+      commentCount: 0,
+      notifications: [],
+      messages: [],
+      isSoundOn: true,
+      onlineUsers: [
+        'كريم_أونلاين', 'ليلى_الليلة', 'احمد_فوري', 'نور_الكون', 'سارة_الصوت',
+        'كريم_أونلاين', 'فهد_السريع', 'ميرا_الجميع', 'طالب_الين', 'روان_الصورة',
+        'يوسف_الموسيقي', 'هنا_اللحظة', 'أ мер_الجمعة', 'عمر_الصباح', 'إبراهيم_الليلة',
+        'باسل_الفوري', 'أmeer_الصباح', 'دار_الكون', 'تمارا_الجمعة', 'صafa_الليل'
+      ],
+      currentOnlineCount: 184,
+      liveUserCount: 12,
+      videoIndex: 0,
+    };
 
-      const defaults = [
-        {
-          id: "p1",
-          author: "سارة الخطيب",
-          initials: "س",
-          avatar: "linear-gradient(145deg,#ff8a65,#ef5350)",
-          verified: true,
-          time: "منذ 8 دقائق",
-          created: 400,
-          text: "لحظة هادئة من رحلتي الأخيرة. أحياناً نحتاج فقط إلى التوقف ومشاهدة التفاصيل الجميلة حولنا. #التصوير #لحظات",
-          media: "scenic",
-          likes: 248,
-          liked: false,
-          saved: false,
-          shares: 18,
-          comments: [
-            { author: "ريم", initials: "ر", text: "الألوان ساحرة جداً! لقطة موفقة 👏" }
-          ]
-        },
-        {
-          id: "p2",
-          author: "عمر الحلبي",
-          initials: "ع",
-          avatar: "linear-gradient(145deg,#26a69a,#42a5f5)",
-          verified: true,
-          time: "منذ 25 دقيقة",
-          created: 300,
-          text: "ما العادة الصغيرة التي أحدثت فرقاً حقيقياً في يومك؟ #تطوير_الذات",
-          media: "poll",
-          poll: {
-            options: [
-              { text: "القراءة يومياً", votes: 132 },
-              { text: "المشي صباحاً", votes: 96 },
-              { text: "كتابة المهام", votes: 74 }
-            ],
-            userVote: null
-          },
-          likes: 117,
-          liked: false,
-          saved: false,
-          shares: 9,
-          comments: []
-        },
-        {
-          id: "p3",
-          author: "نادي الكتاب",
-          initials: "ك",
-          avatar: "linear-gradient(145deg,#ab47bc,#7e57c2)",
-          verified: false,
-          time: "منذ ساعة",
-          created: 200,
-          text: "اقتباس اليوم لكل من يؤجل بدايته بانتظار اللحظة المثالية. #كتب",
-          media: "quote",
-          quote: "لا تنتظر الفرصة المثالية، خذ اللحظة واجعلها مثالية.",
-          likes: 364,
-          liked: true,
-          saved: true,
-          shares: 42,
-          comments: [
-            { author: "ليان", initials: "ل", text: "وصلت في وقتها تماماً 💜" },
-            { author: "محمد", initials: "م", text: "البداية أهم من الكمال." }
-          ]
-        },
-        {
-          id: "p4",
-          author: "يوسف التقني",
-          initials: "ي",
-          avatar: "linear-gradient(145deg,#5c6bc0,#7e57c2)",
-          verified: true,
-          time: "منذ ساعتين",
-          created: 100,
-          text: "جمعت قائمة بأدوات مجانية وخفيفة تساعدك على تنظيم العمل والتركيز دون تعقيد. #تقنية",
-          media: "link",
-          likes: 89,
-          liked: false,
-          saved: false,
-          shares: 21,
-          comments: []
-        }
-      ];
+    // ========================
+    // VIDEO DATA
+    // ========================
+    const videos = [{
+      id: 1,
+      user: '،نور_الكون',
+      username: 'نور_الكون',
+      avatar: 'ن',
+      avatarColor: '#25f4ee',
+      caption: 'يوم جميل أونلاين ✨ #فوري #أونلاين',
+      sound: 'موسيقى هادئة',
+      likes: 12400,
+      comments: 234,
+      shares: 89,
+      duration: '0:18',
+      color: 'bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900',
+      isLive: false,
+      tags: ['#فوري', '#أونلاين']
+    }, {
+      id: 2,
+      user: '،ليلى_الليلة',
+      username: 'ليلى_الليلة',
+      avatar: 'ل',
+      avatarColor: '#fe2c55',
+      caption: 'رمصتي الأولى here! 😍 #بدون_تأخير',
+      sound: 'صوت تريند',
+      likes: 8900,
+      comments: 156,
+      shares: 42,
+      duration: '0:22',
+      color: 'bg-gradient-to-br from-pink-600 via-rose-600 to-slate-900',
+      isLive: false,
+      tags: ['#بدون_تأخير', '#تريند']
+    }, {
+      id: 3,
+      user: '،احمد_فوري',
+      username: 'احمد_فوري',
+      avatar: 'أ',
+      avatarColor: '#fbbf24',
+      caption: 'هذا هو التفاعل الحقيقي! 🔥 #تيكفوري',
+      sound: 'بينغ بونج',
+      likes: 15700,
+      comments: 312,
+      shares: 201,
+      duration: '0:30',
+      color: 'bg-gradient-to-br from-yellow-500 via-amber-600 to-slate-900',
+      isLive: true,
+      tags: ['#تريند', '#تيكفوري']
+    }, {
+      id: 4,
+      user: '،سارة_الصوت',
+      username: 'سارة_الصوت',
+      avatar: 'س',
+      avatarColor: '#8b5cf6',
+      caption: 'الكلمة الأفضل هنا ✍️ #أونلاين #فوري',
+      sound: 'أصوات مدينة',
+      likes: 9200,
+      comments: 189,
+      shares: 67,
+      duration: '0:15',
+      color: 'bg-gradient-to-br from-violet-600 via-purple-700 to-slate-900',
+      isLive: false,
+      tags: ['#أونلاين', '#كلمات']
+    }, {
+      id: 5,
+      user: '،فهد_السريع',
+      username: 'فهد_السريع',
+      avatar: 'ف',
+      avatarColor: '#10b981',
+      caption: 'سرعة الفور! 💨 #بدون_لاق #فوري',
+      sound: 'صوت رياح',
+      likes: 22300,
+      comments: 445,
+      shares: 312,
+      duration: '0:26',
+      color: 'bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900',
+      isLive: true,
+      tags: ['#بدون_لاق', '#فوري']
+    }, {
+      id: 6,
+      user: '،ميرا_الجميع',
+      username: 'ميرا_الجميع',
+      avatar: 'م',
+      avatarColor: '#ec4899',
+      caption: 'جميع مشاعرك في دقيقة #تريند #موسيقى',
+      sound: 'باليه كلاسيكي',
+      likes: 18500,
+      comments: 278,
+      shares: 156,
+      duration: '0:20',
+      color: 'bg-gradient-to-br from-pink-500 via-fuchsia-600 to-slate-900',
+      isLive: false,
+      tags: ['#تريند', '#موسيقى']
+    }, ];
 
-      let posts = loadPosts();
+    const liveVideos = [{
+      id: 101,
+      user: '،احمد_فوري',
+      username: 'احمد_فوري',
+      avatar: 'أ',
+      avatarColor: '#fbbf24',
+      caption: 'بث مباشر الآن! shoutout للجماعة 🔴',
+      viewers: 847,
+      duration: '3:24',
+      color: 'bg-gradient-to-br from-orange-600 via-red-600 to-slate-900',
+    }, {
+      id: 102,
+      user: '،فهد_السريع',
+      username: 'فهد_السريع',
+      avatar: 'ف',
+      avatarColor: '#10b981',
+      caption: 'لقاء عشوائي أونلاين! انضموا 🎮',
+      viewers: 1234,
+      duration: '12:07',
+      color: 'bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900',
+    }, {
+      id: 103,
+      user: '،نور_الكون',
+      username: 'نور_الكون',
+      avatar: 'ن',
+      avatarColor: '#25f4ee',
+      caption: 'نغمات atmosfera الليلية 🌙🎵',
+      viewers: 562,
+      duration: '5:42',
+      color: 'bg-gradient-to-br from-indigo-600 via-purple-700 to-slate-900',
+    }, ];
 
-      const $ = selector => document.querySelector(selector);
-      const $$ = selector => [...document.querySelectorAll(selector)];
+    const commentsData = [{
+        user: 'ليلى_الليلة',
+        text: 'رائع جداً! 🔥',
+        time: '2 دقيقة',
+        avatar: 'ل',
+        color: '#fe2c55'
+      },
+      {
+        user: 'احمد_فوري',
+        text: 'ما شاء الله 🔥🔥',
+        time: '5 دقائق',
+        avatar: 'أ',
+        color: '#fbbf24'
+      },
+      {
+        user: 'نور_الكون',
+        text: 'هذا 교수는 أونلاين! 🎯',
+        time: 'دقيقة',
+        avatar: 'ن',
+        color: '#25f4ee'
+      },
+      {
+        user: 'سارة_الصوت',
+        text: 'صوت رائع 😍',
+        time: '8 دقائق',
+        avatar: 'س',
+        color: '#8b5cf6'
+      },
+      {
+        user: 'فهد_السريع',
+        text: 'لمحة سريعة لكن مؤثرة!',
+        time: '12 دقيقة',
+        avatar: 'ف',
+        color: '#10b981'
+      },
+    ];
 
-      function loadPosts() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-          return Array.isArray(saved) ? saved : JSON.parse(JSON.stringify(defaults));
-        } catch {
-          return JSON.parse(JSON.stringify(defaults));
-        }
-      }
+    const notificationData = [{
+        icon: 'fa-heart',
+        color: '#fe2c55',
+        title: 'كريم_أونلاين أعجب فيديو',
+        desc: 'احمد_فوري أعجب فيديو لك',
+        time: 'منذ دقيقة'
+      },
+      {
+        icon: 'fa-comment',
+        color: '#25f4ee',
+        title: 'تعليق جديد',
+        desc: 'ليلى_الليلة علقت على فيديو',
+        time: 'منذ 3 دقائق'
+      },
+      {
+        icon: 'fa-user',
+        color: '#fbbf24',
+        title: 'متابع جديد',
+        desc: 'سارة_الصوت أضافتك كمتابع',
+        time: 'منذ 7 دقائق'
+      },
+      {
+        icon: 'fa-broadcast-tower',
+        color: '#ef4444',
+        title: 'بث مباشر',
+        desc: 'فهد_السريع يبث الآن!',
+        time: 'بشكل مباشر'
+      },
+    ];
 
-      function savePosts() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-        } catch {
-          showToast("تعذر الحفظ؛ قد تكون مساحة المتصفح ممتلئة");
-        }
-      }
+    const messagesData = [{
+        from: 'كريم_أونلاين',
+        to: 'كريم_أونلاين',
+        text: 'فيديو رائع يا نور! 🔥',
+        time: 'الآن',
+        isSelf: true,
+        read: true
+      },
+      {
+        from: 'نور_الكون',
+        to: 'كريم_أونلاين',
+        text: 'شكراً! أنت أيضاً ممتاز 🎯',
+        time: 'قبل دقيقتين',
+        isSelf: false,
+        read: true
+      },
+      {
+        from: 'احمد_فوري',
+        to: 'كريم_أونلاين',
+        text: 'أيها الأونلاين! let’s go 🚀',
+        time: 'قبل 5 دقائق',
+        isSelf: false,
+        read: false
+      },
+      {
+        from: 'كريم_أونلاين',
+        to: 'كريم_أونلاين',
+        text: 'ل격적인 فيديو قادم قريباً 😎',
+        time: 'قبل 10 دقائق',
+        isSelf: true,
+        read: true
+      },
+    ];
 
-      function escapeHTML(value = "") {
-        return String(value).replace(/[&<>"']/g, char => ({
-          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-        })[char]);
-      }
+    // ========================
+    // DOM REFS
+    // ========================
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
 
-      function richText(value) {
-        return escapeHTML(value).replace(/(^|\s)(#[\p{L}\p{N}_]+)/gu, '$1<span class="hashtag">$2</span>');
-      }
+    const feedFYP = $('#feedFYP');
+    const feedFollowing = $('#feedFollowing');
+    const feedLive = $('#feedLive');
+    const tabFYP = $('#tabForYou');
+    const tabFollowing = $('#tabFollowing');
+    const tabLive = $('#tabLive');
+    const commentsOverlay = $('#commentsOverlay');
+    const commentList = $('#commentList');
+    const commentInput = $('#commentInput');
+    const profileOverlay = $('#profileOverlay');
+    const notificationsOverlay = $('#notificationsOverlay');
+    const notificationList = $('#notificationList');
+    const discoverOverlay = $('#discoverOverlay');
+    const messagesOverlay = $('#messagesOverlay');
+    const messageList = $('#messageList');
+    const uploadOverlay = $('#uploadOverlay');
+    const doubleTapHeart = $('#doubleTapHeart');
+    const onlineCountSpan = $('#onlineCount');
+    const liveUserCountSpan = $('#liveUserCount');
+    const sidebarOnlineCount = $('#sidebarOnlineCount');
+    const miniOnlineList = $('#onlineUsersMiniList');
+    const commentTotalCount = $('#commentTotalCount');
+    const mobileLikeCount = $('#mobileLikeCount');
+    const mobileCommentCount = $('#mobileCommentCount');
+    const desktopLikeCount = $('#desktopLikeCount');
+    const desktopCommentCount = $('#desktopCommentCount');
 
-      function formatNumber(value) {
-        return new Intl.NumberFormat("ar", { notation: value > 999 ? "compact" : "standard" }).format(value);
-      }
+    // ========================
+    // RENDER FUNCTIONS
+    // ========================
+    function renderVideoCard(video, index) {
+      return `
+            <div class="snap-start-item min-h-screen md:min-h-0 flex flex-col md:flex-row items-end gap-0 relative z-10">
+              <!-- Video Area -->
+              <div class="relative flex-1 w-full h-full min-h-[280px] md:min-h-0 overflow-hidden">
+                <div class="absolute inset-0 ${video.color} flex items-center justify-center">
+                  <div class="absolute inset-0 opacity-[0.15] bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(255,255,255,0.05)_60%,_rgba(0,0,0,0.3)_100%)]"></div>
+                  <div class="text-6xl md:text-8xl opacity-10 select-none">🎬</div>
+                </div>
 
-      function scenicMedia() {
-        return `
-          <div class="post-media" role="img" aria-label="منظر جبلي وقت الغروب">
-            <svg class="scenic-art" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#525bd9"/>
-                  <stop offset=".52" stop-color="#ef8fa5"/>
-                  <stop offset="1" stop-color="#ffd69d"/>
-                </linearGradient>
-                <linearGradient id="mountain" x1="0" x2="1">
-                  <stop stop-color="#303359"/>
-                  <stop offset="1" stop-color="#5f5270"/>
-                </linearGradient>
-              </defs>
-              <rect width="800" height="500" fill="url(#sky)"/>
-              <circle cx="590" cy="150" r="63" fill="#ffe7bc" opacity=".92"/>
-              <path d="M0 340 155 185 280 320 390 205 565 352 670 245 800 350V500H0Z" fill="url(#mountain)"/>
-              <path d="M0 395 130 320 240 390 355 300 515 405 650 335 800 410V500H0Z" fill="#252943"/>
-              <path d="M0 420Q200 380 400 425T800 410V500H0Z" fill="#171d36"/>
-              <path d="M120 340h6v85h-6zM99 373l24-62 24 62zM650 375h7v64h-7zM630 399l24-66 24 66z" fill="#11172c"/>
-              <g fill="#fff" opacity=".7"><circle cx="120" cy="80" r="2"/><circle cx="225" cy="112" r="2"/><circle cx="720" cy="91" r="2"/></g>
-            </svg>
-          </div>`;
-      }
+                <!-- Video player mockup -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black/40 border-2 border-white/20 flex items-center justify-center backdrop-blur-sm">
+                    <i class="fa-solid fa-play text-white/60 text-xl md:text-2xl ml-1"></i>
+                  </div>
+                </div>
 
-      function renderMedia(post) {
-        if (post.media === "scenic") return scenicMedia();
+                <!-- Top gradient overlay -->
+                <div class="absolute top-0 left-0 right-0 z-10 video-gradient h-[120px] md:h-[100px]"></div>
+                <div class="absolute bottom-0 left-0 right-0 z-10 video-gradient h-[140px] md:h-[120px] rounded-b-[2rem] md:rounded-none"></div>
 
-        if (post.media === "upload" && /^data:image\//.test(post.image || "")) {
-          return `<div class="post-media"><img src="${post.image}" alt="صورة مرفقة بالمنشور"></div>`;
-        }
+                <!-- Top Right Info -->
+                <div class="absolute top-4 left-4 z-20 flex items-center gap-2">
+                  <div class="w-9 h-9 rounded-full bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-md border-2 border-white/30 flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                    ${video.avatar}
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="text-white font-bold text-sm md:text-base leading-tight cursor-pointer hover:text-tiktok-cyan smooth-transition">${video.user}</span>
+                    <span class="text-[10px] md:text-xs text-white/50 bg-white/10 px-1.5 py-0.5 rounded-full backdrop-blur-sm inline-block mt-0.5">${video.sound}</span>
+                  </div>
+                  <button class="ml-2 text-white/70 hover:text-white smooth-transition p-1">
+                    <i class="fa-solid fa-ellipsis"></i>
+                  </button>
+                </div>
 
-        if (post.media === "quote") {
-          return `<div class="post-media quote-art"><blockquote>${escapeHTML(post.quote)}</blockquote></div>`;
-        }
+                <!-- Top Right: Sound & Duration -->
+                <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
+                  <button class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white rounded-full px-2.5 py-1 text-[10px] font-bold smooth-transition border border-white/10">
+                    <i class="fa-solid fa-music mr-1"></i>${video.sound}
+                  </button>
+                  <span class="text-white/60 text-[10px] font-mono">${video.duration}</span>
+                </div>
 
-        if (post.media === "link") {
-          return `<div class="link-preview">
-            <span class="link-icon"><svg class="icon"><use href="#i-link"></use></svg></span>
-            <div><strong>مجموعة أدوات مجانية للإنتاجية والتركيز</strong><small>دليل وصلة التقني · قراءة 4 دقائق</small></div>
-          </div>`;
-        }
+                <!-- Live badge -->
+                ${video.isLive ? `
+                <div class="absolute top-4 left-1/3 md:left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-red-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white live-indicator"></span>
+                  بث مباشر
+                </div>` : ''}
 
-        if (post.media === "poll" && post.poll) {
-          const total = post.poll.options.reduce((sum, option) => sum + option.votes, 0);
-          const voted = post.poll.userVote !== null;
-          return `<div class="poll">
-            ${post.poll.options.map((option, index) => {
-              const percent = total ? Math.round(option.votes / total * 100) : 0;
-              return `<button class="poll-option" type="button" data-action="vote" data-option="${index}">
-                ${voted ? `<span class="poll-fill" style="--percent:${percent}%"></span>` : ""}
-                <span class="poll-label"><span>${escapeHTML(option.text)}</span>${voted ? `<b>${percent}٪</b>` : ""}</span>
-              </button>`;
-            }).join("")}
-            <span class="poll-note">${formatNumber(total)} صوتاً${voted ? " · تم تسجيل اختيارك" : " · اختر إجابتك"}</span>
-          </div>`;
-        }
+                <!-- Bottom Info -->
+                <div class="absolute bottom-4 left-4 right-4 z-20 flex flex-col items-start gap-1.5 max-w-[85%]">
+                  <div class="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/10 w-fit">
+                    <span class="text-white font-bold text-sm md:text-base leading-tight">${video.user}</span>
+                    <span class="text-white/90 text-sm md:text-base">${video.caption}</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 mt-0.5">
+                    ${video.tags.map(t => `<span class="text-[10px] bg-white/10 text-white/70 px-2 py-0.5 rounded-full font-medium">${t}</span>`).join('')}
+                  </div>
+                </div>
 
-        return "";
-      }
+                <!-- Right Actions (visible on scroll pause or via overlay) -->
+                <div class="absolute right-3 bottom-20 md:bottom-16 z-20 flex flex-col items-center gap-4">
+                  <!-- Likes -->
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleLike(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-tiktok-red hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-heart text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${formatNumber(video.likes)}</span>
+                  </div>
+                  <!-- Comments -->
+                  <div class="flex flex-col items-center gap-0.5" onclick="openComments(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-tiktok-cyan hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-comment text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${video.comments}</span>
+                  </div>
+                  <!-- Share -->
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleShare(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-yellow-400 hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-paper-plane text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${video.shares}</span>
+                  </div>
+                  <!-- Save -->
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleSave(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white smooth-transition border border-white/10">
+                      <i class="fa-solid fa-bookmark text-lg"></i>
+                    </div>
+                  </div>
+                  <!-- Sound/Toggle -->
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleSound(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-yellow-400 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-music text-lg"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-      function postTemplate(post, index) {
-        const comments = post.comments || [];
-        const isOpen = openComments.has(post.id);
-
-        return `<article class="card post-card" data-id="${escapeHTML(post.id)}" style="animation-delay:${Math.min(index * 45, 180)}ms">
-          <header class="post-head">
-            <div class="avatar" style="--avatar:${post.avatar}">${escapeHTML(post.initials)}</div>
-            <div class="post-author">
-              <strong>${escapeHTML(post.author)} ${post.verified ? '<span class="verified">✓</span>' : ""}</strong>
-              <span>${escapeHTML(post.time)} · عام</span>
-            </div>
-            <button class="more-btn" type="button" data-action="more" aria-label="المزيد">
-              <svg class="icon"><use href="#i-more"></use></svg>
-            </button>
-          </header>
-
-          ${post.text ? `<div class="post-text">${richText(post.text)}</div>` : ""}
-          ${renderMedia(post)}
-
-          <div class="post-stats">
-            <span>${formatNumber(post.likes)} إعجاب</span>
-            <span>${formatNumber(comments.length)} تعليق · ${formatNumber(post.shares || 0)} مشاركة</span>
-          </div>
-
-          <div class="post-actions">
-            <button class="post-action ${post.liked ? "liked" : ""}" type="button" data-action="like" aria-pressed="${post.liked}">
-              <svg class="icon"><use href="#i-heart"></use></svg><span>إعجاب</span>
-            </button>
-            <button class="post-action" type="button" data-action="comments">
-              <svg class="icon"><use href="#i-comment"></use></svg><span>تعليق</span>
-            </button>
-            <button class="post-action" type="button" data-action="share">
-              <svg class="icon"><use href="#i-share"></use></svg><span>مشاركة</span>
-            </button>
-            <button class="post-action ${post.saved ? "saved" : ""}" type="button" data-action="save" aria-pressed="${post.saved}">
-              <svg class="icon"><use href="#i-bookmark"></use></svg><span>${post.saved ? "محفوظ" : "حفظ"}</span>
-            </button>
-          </div>
-
-          <section class="comments" ${isOpen ? "" : "hidden"}>
-            ${comments.map(comment => `<div class="comment">
-              <div class="avatar small">${escapeHTML(comment.initials)}</div>
-              <div class="comment-bubble"><strong>${escapeHTML(comment.author)}</strong><p>${escapeHTML(comment.text)}</p></div>
-            </div>`).join("")}
-            <div class="comment-form">
-              <input maxlength="160" placeholder="اكتب تعليقاً كزائر..." aria-label="تعليق">
-              <button class="send-comment" type="button" data-action="add-comment" aria-label="إرسال">
-                <svg class="icon"><use href="#i-send"></use></svg>
-              </button>
-            </div>
-          </section>
-        </article>`;
-      }
-
-      function renderPosts() {
-        let visible = [...posts];
-
-        if (currentView === "saved") visible = visible.filter(post => post.saved);
-        if (currentView === "popular") visible.sort((a, b) => b.likes - a.likes);
-        else if (currentSort === "popular") visible.sort((a, b) => b.likes - a.likes);
-        else visible.sort((a, b) => b.created - a.created);
-
-        if (searchTerm.trim()) {
-          const term = searchTerm.trim().toLowerCase();
-          visible = visible.filter(post =>
-            `${post.author} ${post.text || ""} ${post.quote || ""}`.toLowerCase().includes(term)
-          );
-        }
-
-        $("#feed").innerHTML = visible.length
-          ? visible.map(postTemplate).join("")
-          : `<div class="card empty-state">
-              <svg class="icon"><use href="#i-search"></use></svg>
-              <h3>لا توجد نتائج حالياً</h3>
-              <p>جرّب عبارة أخرى أو انشر أول مشاركة هنا.</p>
+              <!-- Sidebar (desktop) -->
+              <div class="hidden md:flex w-72 bg-tiktok-card/80 backdrop-blur-md border-l border-white/5 flex-col items-start pt-10 pr-4 gap-3">
+                <div class="flex items-center gap-3 w-full">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-white/20 flex items-center justify-center text-white text-lg font-bold">
+                    ${video.avatar}
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="text-white font-bold text-base cursor-pointer hover:text-tiktok-cyan smooth-transition">${video.user}</span>
+                    <span class="text-[10px] text-white/40 bg-white/10 px-1.5 py-0.5 rounded-full inline-block mt-0.5 w-fit">${video.sound}</span>
+                  </div>
+                  <button class="ml-auto text-white/50 hover:text-white transition smooth-transition p-1">
+                    <i class="fa-solid fa-ellipsis"></i>
+                  </button>
+                </div>
+                <div class="text-white font-bold text-lg leading-normal cursor-pointer hover:text-tiktok-cyan smooth-transition scroll-hide">${video.caption}</div>
+                <div class="flex flex-wrap gap-1.5 mt-1">
+                  ${video.tags.map(t => `<span class="text-[11px] bg-white/10 text-white/70 px-2.5 py-1 rounded-full font-medium cursor-pointer hover:bg-white/20 smooth-transition">${t}</span>`).join('')}
+                </div>
+                <div class="flex items-center gap-4 mt-2 text-white/80">
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-tiktok-red smooth-transition" onclick="handleLike()">
+                    <i class="fa-solid fa-heart text-xl"></i>
+                    <span class="text-sm font-mono">${formatNumber(video.likes)}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-tiktok-cyan smooth-transition" onclick="openComments()">
+                    <i class="fa-solid fa-comment text-xl"></i>
+                    <span class="text-sm font-mono">${video.comments}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-yellow-400 smooth-transition" onclick="handleShare()">
+                    <i class="fa-solid fa-paper-plane text-xl"></i>
+                    <span class="text-sm font-mono">${video.shares}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 mt-1 w-full pt-2 border-t border-white/5">
+                  <div class="flex-1 flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-full py-1.5 px-3 smooth-transition cursor-pointer">
+                    <i class="fa-solid fa-microphone text-white/60 text-sm"></i>
+                    <span class="text-xs text-white/60">${video.sound}</span>
+                    <i class="fa-solid fa-chevron-right text-white/30 text-[10px]"></i>
+                  </div>
+                  <div class="flex items-center gap-1 bg-white/5 hover:bg-white/10 rounded-full py-1.5 px-3 smooth-transition cursor-pointer" onclick="openProfileModal()">
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/20 flex items-center justify-center text-white text-[10px] font-bold">${video.avatar}</div>
+                  </div>
+                </div>
+                <!-- Mini comment preview -->
+                <div class="mt-2 pt-2 border-t border-white/5">
+                  <div class="text-[10px] text-white/40 mb-1 font-bold">آخر التعليقات</div>
+                  <div class="space-y-1">
+                    ${commentsData.slice(0, 3).map(c => `
+                      <div class="flex items-start gap-2 text-xs">
+                        <span class="w-5 h-5 rounded-full bg-gradient-to-br from-${c.color}/30 to-${c.color}/10 flex items-center justify-center text-white text-[8px] font-bold shrink-0">${c.avatar}</span>
+                        <div class="min-w-0">
+                          <span class="text-white/80 font-bold">${c.user}</span>
+                          <span class="text-white/60 ml-1">${c.text}</span>
+                        </div>
+                      </div>`).join('')}
+                  </div>
+                </div>
+              </div>
             </div>`;
+    }
 
-        $("#guestPostCount").textContent = posts.filter(post => post.guest).length;
-        $("#savedCount").textContent = posts.filter(post => post.saved).length;
+    function renderLiveCard(video, index) {
+      return `
+            <div class="snap-start-item min-h-screen md:min-h-0 flex flex-col md:flex-row items-end gap-0 relative z-10">
+              <div class="relative flex-1 w-full h-full min-h-[280px] md:min-h-0 overflow-hidden">
+                <div class="absolute inset-0 ${video.color} flex items-center justify-center">
+                  <div class="absolute inset-0 opacity-[0.1] bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(255,255,255,0.03)_60%,_rgba(0,0,0,0.4)_100%)]"></div>
+                  <div class="text-6xl md:text-8xl opacity-20 select-none animate-pulse">🔴</div>
+                </div>
+                <!-- Live badge -->
+                <div class="absolute top-4 left-4 z-20 flex items-center gap-2 bg-red-600/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full animate-pulse">
+                  <span class="w-2.5 h-2.5 rounded-full bg-white live-indicator"></span>
+                  بث مباشر
+                </div>
+                <!-- Viewer count -->
+                <div class="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/20">
+                  <i class="fa-solid fa-users mr-1 text-tiktok-cyan"></i>${formatNumber(video.viewers)} مشاهد
+                </div>
+                <!-- Avatar -->
+                <div class="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+                  <div class="w-9 h-9 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-white/30 backdrop-blur-md flex items-center justify-center text-white text-sm font-bold">
+                    ${video.avatar}
+                  </div>
+                  <span class="text-white font-bold text-sm bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-full">${video.user}</span>
+                  <span class="text-white/40 text-xs bg-black/30 backdrop-blur-md px-2 py-0.5 rounded-full">${video.duration}</span>
+                </div>
+                <!-- Bottom overlay -->
+                <div class="absolute bottom-0 left-0 right-0 z-10 h-[100px] md:h-[120px] video-gradient rounded-t-[2rem] md:rounded-none"></div>
+                <div class="absolute bottom-4 left-4 right-4 z-20">
+                  <div class="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/10 w-fit">
+                    <span class="w-2 h-2 rounded-full bg-red-500 live-indicator"></span>
+                    <span class="text-white font-bold text-sm">${video.user}</span>
+                    <span class="text-white/90 text-sm">${video.caption}</span>
+                  </div>
+                </div>
+                <!-- Right actions -->
+                <div class="absolute right-3 bottom-20 md:bottom-16 z-20 flex flex-col items-center gap-4">
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleLike(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-tiktok-red hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-heart text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${formatNumber(Math.floor(video.viewers * 0.8))}</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-0.5" onclick="openComments(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-tiktok-cyan hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-comment text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${Math.floor(video.viewers * 0.05)}</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-0.5" onclick="handleShare(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-yellow-400 hover:bg-white/20 smooth-transition border border-white/10">
+                      <i class="fa-solid fa-paper-plane text-lg"></i>
+                    </div>
+                    <span class="text-[10px] text-white/50 font-mono">${Math.floor(video.viewers * 0.03)}</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-0.5" onclick="openProfileModal(); event.stopPropagation();">
+                    <div class="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white smooth-transition border border-white/10">
+                      <span class="text-lg">👤</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Desktop sidebar -->
+              <div class="hidden md:flex w-72 bg-tiktok-card/80 backdrop-blur-md border-l border-white/5 flex-col items-start pt-10 pr-4 gap-3">
+                <div class="flex items-center gap-3 w-full">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-white/20 flex items-center justify-center text-white text-lg font-bold">${video.avatar}</div>
+                  <div class="flex flex-col">
+                    <span class="text-white font-bold text-base">${video.user}</span>
+                    <span class="text-[10px] text-white/40 bg-white/10 px-1.5 py-0.5 rounded-full inline-block mt-0.5 w-fit flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-red-500 live-indicator inline-block"></span>بث مباشر</span>
+                  </div>
+                </div>
+                <div class="text-white font-bold text-lg leading-normal">${video.caption}</div>
+                <div class="flex items-center gap-4 mt-2 text-white/80">
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-tiktok-red smooth-transition" onclick="handleLike()">
+                    <i class="fa-solid fa-heart text-xl"></i>
+                    <span class="text-sm font-mono">${formatNumber(Math.floor(video.viewers * 0.8))}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-tiktok-cyan smooth-transition" onclick="openComments()">
+                    <i class="fa-solid fa-comment text-xl"></i>
+                    <span class="text-sm font-mono">${Math.floor(video.viewers * 0.05)}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 cursor-pointer hover:text-yellow-400 smooth-transition" onclick="handleShare()">
+                    <i class="fa-solid fa-paper-plane text-xl"></i>
+                    <span class="text-sm font-mono">${Math.floor(video.viewers * 0.03)}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 mt-1 w-full pt-2 border-t border-white/5">
+                  <div class="flex-1 flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-full py-1.5 px-3 smooth-transition cursor-pointer">
+                    <i class="fa-solid fa-headset text-white/60 text-sm"></i>
+                    <span class="text-xs text-white/60">انضم للأونلاين</span>
+                  </div>
+                  <div class="flex items-center gap-1 bg-white/5 hover:bg-white/10 rounded-full py-1.5 px-3 smooth-transition cursor-pointer" onclick="openProfileModal()">
+                    <div class="w-6 h-6 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/20 flex items-center justify-center text-white text-[10px] font-bold">${video.avatar}</div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+    }
+
+    function renderFollowingCard(video, index) {
+      return renderVideoCard(video, index);
+    }
+
+    // ========================
+    // HELPERS
+    // ========================
+    function formatNumber(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'م';
+      if (num >= 1000) return (num / 1000).toFixed(1) + 'ألف';
+      return num.toString();
+    }
+
+    // ========================
+    // FEED RENDER
+    // ========================
+    function renderFeed() {
+      if (state.currentTab === 'foryou') {
+        feedFYP.innerHTML = videos.map((v, i) => renderVideoCard(v, i)).join('');
+        feedFYP.classList.remove('hidden');
+        feedFollowing.classList.add('hidden');
+        feedLive.classList.add('hidden');
+      } else if (state.currentTab === 'following') {
+        feedFollowing.innerHTML = videos.map((v, i) => renderFollowingCard(v, i)).join('');
+        feedFollowing.classList.remove('hidden');
+        feedFYP.classList.add('hidden');
+        feedLive.classList.add('hidden');
+      } else if (state.currentTab === 'live') {
+        feedLive.innerHTML = liveVideos.map((v, i) => renderLiveCard(v, i)).join('');
+        feedLive.classList.remove('hidden');
+        feedFYP.classList.add('hidden');
+        feedFollowing.classList.add('hidden');
+        feedLive.classList.add('snap-y-mandatory');
       }
-
-      function updateComposer() {
-        const length = $("#postText").value.length;
-        $("#charCount").textContent = length;
-        const pollReady = pollMode && $$(".poll-input").filter(input => input.value.trim()).length >= 2;
-        $("#publishBtn").disabled = !(length || pendingImage) || (pollMode && !pollReady);
+      // Reset scroll snap for live
+      if (state.currentTab === 'live') {
+        feedLive.classList.add('snap-y-mandatory');
+        feedLive.style.overflowY = 'auto';
       }
+      updateCounts();
+    }
 
-      function resetComposer() {
-        $("#postText").value = "";
-        $("#postText").style.height = "";
-        pendingImage = "";
-        pollMode = false;
-        $("#composerPreview").hidden = true;
-        $("#pollBuilder").hidden = true;
-        $("#togglePoll").classList.remove("active");
-        $$(".poll-input").forEach(input => input.value = "");
-        $("#imageInput").value = "";
-        updateComposer();
+    function updateCounts() {
+      const currentVideo = state.currentTab === 'foryou' ? videos[state.videoIndex] :
+        state.currentTab === 'following' ? videos[state.videoIndex] :
+        liveVideos[0];
+      if (currentVideo) {
+        const likeCount = currentVideo.likes;
+        const commentCount = currentVideo.comments;
+        mobileLikeCount.textContent = formatNumber(likeCount);
+        desktopLikeCount.textContent = formatNumber(likeCount);
+        mobileCommentCount.textContent = commentCount;
+        desktopCommentCount.textContent = commentCount;
+        commentTotalCount.textContent = commentCount;
       }
+    }
 
-      function publishPost() {
-        const text = $("#postText").value.trim();
-        const options = $$(".poll-input").map(input => input.value.trim()).filter(Boolean);
+    // ========================
+    // TAB SWITCHING
+    // ========================
+    function switchTab(tab) {
+      state.currentTab = tab;
+      // Update button styles
+      [tabFYP, tabFollowing, tabLive].forEach(btn => {
+        btn.classList.remove('text-white', 'font-black');
+        btn.classList.add('text-white/60');
+      });
+      if (tab === 'foryou') {
+        tabFYP.classList.remove('text-white/60');
+        tabFYP.classList.add('text-white', 'font-black');
+      } else if (tab === 'following') {
+        tabFollowing.classList.remove('text-white/60');
+        tabFollowing.classList.add('text-white', 'font-black');
+      } else if (tab === 'live') {
+        tabLive.classList.remove('text-white/60');
+        tabLive.classList.add('text-white', 'font-black');
+      }
+      renderFeed();
+      // Scroll to top
+      const container = state.currentTab === 'live' ? feedLive : state.currentTab === 'foryou' ? feedFYP :
+        feedFollowing;
+      if (container) container.scrollTop = 0;
+    }
 
-        if (!text && !pendingImage) return;
-        if (pollMode && options.length < 2) {
-          showToast("أضف خيارين على الأقل للاستطلاع");
-          return;
+    // ========================
+    // LIKE HANDLER (Double-tap + click)
+    // ========================
+    let lastTap = 0;
+    let likeCount = 0;
+
+    function handleLike() {
+      const video = getActiveVideo();
+      if (video) {
+        video.likes += 1;
+        likeCount = video.likes;
+        updateCounts();
+        // Heart burst effect
+        showHeartBurst();
+        // Update sidebar like count
+        updateSidebarLikes(video.likes);
+      }
+    }
+
+    function getActiveVideo() {
+      if (state.currentTab === 'foryou') return videos[state.videoIndex] || videos[0];
+      if (state.currentTab === 'following') return videos[state.videoIndex] || videos[0];
+      if (state.currentTab === 'live') return liveVideos[0];
+      return videos[0];
+    }
+
+    function updateSidebarLikes(count) {
+      // Update the like count in sidebar if visible
+      const sidebarLikes = document.querySelectorAll('.flex.items-center.gap-4.mt-2 .fa-heart + span');
+      sidebarLikes.forEach(el => el.textContent = formatNumber(count));
+      // Also update the bottom bar
+      const bottomLike = document.querySelector('.hidden.md\\:flex .fa-heart + span');
+      if (bottomLike) bottomLike.textContent = formatNumber(count);
+    }
+
+    function showHeartBurst() {
+      const hearts = document.createElement('div');
+      hearts.className = 'heart-burst absolute inset-0 pointer-events-none z-50 flex items-center justify-center';
+      for (let i = 0; i < 8; i++) {
+        const icon = document.createElement('i');
+        icon.className = 'fa-solid fa-heart text-tiktok-red text-2xl';
+        icon.style.position = 'absolute';
+        icon.style.fontSize = (2 + Math.random() * 3) + 'rem';
+        icon.style.animationDelay = (i * 0.05) + 's';
+        icon.style.transform = `rotate(${i * 45}deg) translate(${15 + Math.random() * 20}px, -${20 + Math.random() * 30}px)`;
+        hearts.appendChild(icon);
+      }
+      const activeVideo = document.querySelector('.snap-start-item');
+      if (activeVideo) {
+        const overlay = activeVideo.querySelector('.relative.flex-1');
+        if (overlay) {
+          const burst = hearts.cloneNode(true);
+          overlay.style.position = 'relative';
+          overlay.appendChild(burst);
+          setTimeout(() => burst.remove(), 900);
         }
+      }
+      // Also show the floating heart
+      doubleTapHeart.style.display = 'block';
+      doubleTapHeart.style.left = '50%';
+      doubleTapHeart.style.top = '30%';
+      doubleTapHeart.style.transform = 'translate(-50%, -50%)';
+      setTimeout(() => { doubleTapHeart.style.display = 'none'; }, 900);
+    }
 
-        const newPost = {
-          id: `guest-${Date.now()}`,
-          author: "زائر وصلة",
-          initials: "ز",
-          avatar: "linear-gradient(145deg,#7268ff,#ff7393)",
-          verified: false,
-          time: "الآن",
-          created: Date.now(),
-          text,
-          media: pendingImage ? "upload" : pollMode ? "poll" : null,
-          image: pendingImage || "",
-          poll: pollMode ? {
-            options: options.map(option => ({ text: option, votes: 0 })),
-            userVote: null
-          } : null,
-          likes: 0,
-          liked: false,
-          saved: false,
-          shares: 0,
-          comments: [],
-          guest: true
+    // Double-tap detection (on the feed area)
+    let tapTimers = [];
+    document.addEventListener('click', (e) => {
+      const now = Date.now();
+      tapTimers = tapTimers.filter(t => now - t < 300);
+      tapTimers.push(now);
+      if (tapTimers.length >= 2) {
+        const video = getActiveVideo();
+        if (video) {
+          video.likes += 1;
+          likeCount = video.likes;
+          updateCounts();
+          updateSidebarLikes(video.likes);
+          showHeartBurst();
+        }
+        tapTimers = [];
+      }
+    });
+
+    // ========================
+    // COMMENTS
+    // ========================
+    function openComments() {
+      commentsOverlay.style.display = 'flex';
+      renderComments();
+    }
+
+    function closeComments() {
+      commentsOverlay.style.display = 'none';
+    }
+
+    function renderComments() {
+      const video = getActiveVideo();
+      const count = video ? video.comments : 0;
+      commentTotalCount.textContent = count;
+      const html = commentsData.map(c => `
+            <div class="flex items-start gap-3 comment-enter">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-${c.color}/30 to-${c.color}/10 flex items-center justify-center text-white text-xs font-bold shrink-0">${c.avatar}</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-white font-bold text-sm">${c.user}</span>
+                  <span class="text-[10px] text-white/30">${c.time}</span>
+                </div>
+                <p class="text-white/80 text-sm mt-0.5">${c.text}</p>
+              </div>
+            </div>`).join('');
+      commentList.innerHTML = html || '<div class="text-center text-white/30 text-sm py-8">لا توجد تعليقات بعد</div>';
+    }
+
+    function postComment() {
+      const input = commentInput;
+      const text = input.value.trim();
+      if (!text) return;
+      const newComment = {
+        user: 'كريم_أونلاين',
+        text: text,
+        time: 'الآن',
+        avatar: 'ك',
+        color: '#fe2c55'
+      };
+      commentsData.unshift(newComment);
+      const video = getActiveVideo();
+      if (video) video.comments += 1;
+      renderComments();
+      updateCounts();
+      input.value = '';
+      // Show notification
+      addNotification('fa-comment', '#25f4ee', 'تعليق جديد', 'أضفت تعليقاً على فيديو', 'الآن');
+    }
+
+    commentInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') postComment();
+    });
+
+    // ========================
+    // PROFILE
+    // ========================
+    function openProfileModal() {
+      profileOverlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProfile() {
+      profileOverlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // ========================
+    // NOTIFICATIONS
+    // ========================
+    function openNotifications() {
+      notificationsOverlay.style.display = 'flex';
+      renderNotifications();
+    }
+
+    function closeNotifications() {
+      notificationsOverlay.style.display = 'none';
+    }
+
+    function renderNotifications() {
+      const html = state.notifications.map(n => `
+            <div class="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/5 smooth-transition hover:bg-white/10 cursor-pointer">
+              <div class="w-9 h-9 rounded-full bg-${n.color}/20 flex items-center justify-center text-${n.color} text-sm shrink-0">
+                <i class="fa-solid ${n.icon}"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-bold text-white">${n.title}</div>
+                <div class="text-xs text-white/50 mt-0.5">${n.desc}</div>
+                <div class="text-[10px] text-white/30 mt-1">${n.time}</div>
+              </div>
+            </div>`).join('');
+      notificationList.innerHTML = html;
+    }
+
+    function addNotification(icon, color, title, desc, time) {
+      state.notifications.unshift({ icon, color, title, desc, time });
+      renderNotifications();
+      // Update badge
+      const badge = document.querySelector('#notificationsOverlay + div .notification-pulse');
+      // Also update header badge
+      const headerBadge = document.querySelector('.fa-bell + span');
+      if (headerBadge) {
+        const count = state.notifications.length;
+        headerBadge.textContent = count > 9 ? '9+' : count;
+      }
+    }
+
+    // ========================
+    // DISCOVER
+    // ========================
+    function openDiscoverModal() {
+      discoverOverlay.style.display = 'flex';
+    }
+
+    function closeDiscover() {
+      discoverOverlay.style.display = 'none';
+    }
+
+    // ========================
+    // MESSAGES
+    // =================-------
+    function openMessages() {
+      messagesOverlay.style.display = 'flex';
+      renderMessages();
+    }
+
+    function closeMessages() {
+      messagesOverlay.style.display = 'none';
+    }
+
+    function renderMessages() {
+      const html = messagesData.map(m => `
+            <div class="flex items-start gap-3 ${m.isSelf ? 'flex-row-reverse' : ''} bg-white/5 rounded-2xl px-4 py-2.5 border border-white/5 max-w-[85%] ${m.isSelf ? 'ml-auto bg-tiktok-red/10 border-tiktok-red/20' : ''}">
+              ${!m.isSelf ? `
+                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/20 flex items-center justify-center text-white text-[10px] font-bold shrink-0">ك</div>
+              ` : ''}
+              <div class="text-sm ${m.isSelf ? 'text-right' : ''}">
+                <div class="text-white/80">${m.text}</div>
+                <div class="text-[10px] text-white/30 mt-0.5 ${m.isSelf ? 'text-right' : ''}">${m.time} ${!m.read ? '<span class="text-tiktok-cyan ml-1">غير مقروء</span>' : ''}</div>
+              </div>
+              ${m.isSelf ? `
+                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/20 flex items-center justify-center text-white text-[10px] font-bold shrink-0">ك</div>
+              ` : ''}
+            </div>`).join('');
+      messageList.innerHTML =
+        html ||
+        '<div class="text-center text-white/30 text-sm py-8">لا توجد محادثات</div>';
+    }
+
+    // ========================
+    // UPLOAD
+    // ========================
+    function openUploadModal() {
+      uploadOverlay.style.display = 'flex';
+    }
+
+    function closeUpload() {
+      uploadOverlay.style.display = 'none';
+    }
+
+    // ========================
+    // SHARE
+    // ========================
+    function handleShare() {
+      const video = getActiveVideo();
+      const name = video ? video.username : 'فيديو';
+      if (navigator.share) {
+        navigator.share({
+          title: 'تيك فوري',
+          text: `${name} - تواصل فوري أونلاين!`,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        // Fallback - copy link
+        const dummy = document.createElement('input');
+        dummy.value = window.location.href;
+        document.body.appendChild(dummy);
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        addNotification('fa-paper-plane', '#fbbf24', 'تم النسخ', 'رابط الفيديو نُسبت لل_clipboard', 'الآن');
+      }
+      if (video) video.shares += 1;
+      updateCounts();
+    }
+
+    // ========================
+    // SAVE
+    // ========================
+    function handleSave() {
+      addNotification('fa-bookmark', '#ffffff', 'تم الحفظ', 'تم حفظ الفيديو في المجموعات', 'الآن');
+    }
+
+    // ========================
+    // SOUND TOGGLE
+    // ========================
+    function handleSound() {
+      state.isSoundOn = !state.isSoundOn;
+      const icon = document.querySelector('.fa-music');
+      if (icon) {
+        icon.classList.toggle('text-yellow-400');
+        icon.classList.toggle('text-white/40');
+      }
+      addNotification('fa-music', '#fbbf24', state.isSoundOn ? 'صوت مفعل' : 'صوت معطل',
+        state.isSoundOn ? 'تم تفعيل الصوت' : 'تم تعطيل الصوت', 'الآن');
+    }
+
+    // ========================
+    // ONLINE USERS UPDATES
+    // ========================
+    function updateOnlineCount() {
+      state.currentOnlineCount += Math.floor(Math.random() * 5) - 2;
+      if (state.currentOnlineCount < 120) state.currentOnlineCount = 120 + Math.floor(Math.random() * 20);
+      if (state.currentOnlineCount > 250) state.currentOnlineCount = 250 - Math.floor(Math.random() * 15);
+      onlineCountSpan.textContent = state.currentOnlineCount;
+      sidebarOnlineCount.textContent = state.currentOnlineCount;
+      document.getElementById('miniOnlineCount').textContent = Math.floor(state.currentOnlineCount / 10) + ' نشط';
+      liveUserCountSpan.textContent = Math.floor(state.currentOnlineCount / 15) + Math.floor(Math.random() * 3);
+      // Update mini list
+      const activeUsers = state.onlineUsers.slice(0, 5);
+      miniOnlineList.innerHTML = activeUsers.map(u => {
+        const letter = u.charAt(0);
+        const color = ['#fe2c55', '#25f4ee', '#fbbf24', '#8b5cf6', '#10b981'][Math.floor(Math.random() *
+          5)];
+        return `<div class="flex items-center gap-2 text-xs text-white/70 py-1">
+              <span class="w-5 h-5 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center text-white text-[8px] font-bold">${letter}</span>
+              <span class="truncate">${u}</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 online-dot ml-auto"></span>
+            </div>`;
+      }).join('');
+    }
+
+    // ========================
+    // MODAL CLOSE ON OVERLAY CLICK
+    // ========================
+    document.querySelectorAll('.fixed.inset-0.z-50').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeComments();
+          closeProfile();
+          closeNotifications();
+          closeDiscover();
+          closeMessages();
+          closeUpload();
+        }
+      });
+    });
+
+    // ========================
+    // KEYBOARD SHORTCUTS
+    // ========================
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeComments();
+        closeProfile();
+        closeNotifications();
+        closeDiscover();
+        closeMessages();
+        closeUpload();
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ========================
+    // INIT
+    // ========================
+    renderFeed();
+    updateOnlineCount();
+    setInterval(updateOnlineCount, 4000);
+
+    // Simulate like updates
+    setInterval(() => {
+      const video = getActiveVideo();
+      if (video && Math.random() > 0.7) {
+        video.likes += Math.floor(Math.random() * 5) + 1;
+        updateCounts();
+        updateSidebarLikes(video.likes);
+      }
+    }, 8000);
+
+    // Simulate comment updates
+    setInterval(() => {
+      if (Math.random() > 0.6) {
+        const names = ['مشتت_ذهني', 'جميل_سدا', 'أحلام_أونلاين', 'ريان_الصوت', 'ندا_الفوري'];
+        const newComment = {
+          user: names[Math.floor(Math.random() * names.length)],
+          text: ['رائع!', '🔥🔥', 'ما شاء الله', 'ممتاز', 'جزاك الله خيراً', 'أumbo!', ' 계속할!'][Math.floor(Math
+            .random() * 7)],
+          time: 'الآن',
+          avatar: names[Math.floor(Math.random() * names.length)].charAt(0),
+          color: ['#fe2c55', '#25f4ee', '#fbbf24', '#8b5cf6', '#10b981'][Math.floor(Math.random() * 5)]
         };
-
-        posts.unshift(newPost);
-        savePosts();
-        resetComposer();
-        currentView = "home";
-        currentSort = "recent";
-        setActiveView("home");
-        renderPosts();
-        showToast("تم نشر مشاركتك بنجاح");
+        commentsData.unshift(newComment);
+        const video = getActiveVideo();
+        if (video) video.comments += 1;
+        renderComments();
+        updateCounts();
       }
+    }, 12000);
 
-      function resizeImage(file) {
-        if (!file.type.startsWith("image/")) {
-          showToast("يرجى اختيار ملف صورة");
-          return;
-        }
-
-        if (file.size > 8 * 1024 * 1024) {
-          showToast("حجم الصورة كبير جداً");
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = event => {
-          const image = new Image();
-          image.onload = () => {
-            const max = 1200;
-            const ratio = Math.min(1, max / Math.max(image.width, image.height));
-            const canvas = document.createElement("canvas");
-            canvas.width = Math.round(image.width * ratio);
-            canvas.height = Math.round(image.height * ratio);
-            canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
-            pendingImage = canvas.toDataURL("image/webp", .78);
-            $("#previewImage").src = pendingImage;
-            $("#composerPreview").hidden = false;
-            pollMode = false;
-            $("#pollBuilder").hidden = true;
-            $("#togglePoll").classList.remove("active");
-            updateComposer();
-          };
-          image.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
+    // Simulate notification
+    setInterval(() => {
+      if (Math.random() > 0.5) {
+        const items = [{
+            icon: 'fa-heart',
+            color: '#fe2c55',
+            title: 'إعجاب جديد',
+            desc: `${state.onlineUsers[Math.floor(Math.random() * state.onlineUsers.length)]} أعجب فيديو`,
+            time: 'الآن'
+          },
+          {
+            icon: 'fa-user-plus',
+            color: '#25f4ee',
+            title: 'متابع جديد',
+            desc: `${state.onlineUsers[Math.floor(Math.random() * state.onlineUsers.length)]} أضافتك`,
+            time: 'الآن'
+          },
+          {
+            icon: 'fa-broadcast-tower',
+            color: '#ef4444',
+            title: 'بث جديد',
+            desc: `${state.onlineUsers[Math.floor(Math.random() * state.onlineUsers.length)]} يبث الآن`,
+            time: 'بشكل مباشر'
+          },
+        ];
+        const item = items[Math.floor(Math.random() * items.length)];
+        addNotification(item.icon, item.color, item.title, item.desc, item.time);
       }
+    }, 18000);
 
-      function setActiveView(view) {
-        currentView = view;
-        $$("[data-view]").forEach(button => button.classList.toggle("active", button.dataset.view === view));
-        $("#feedTitle").textContent = view === "saved" ? "المنشورات المحفوظة" : view === "popular" ? "الأكثر تفاعلاً" : "آخر المنشورات";
-        renderPosts();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      function showToast(message) {
-        const toast = $("#toast");
-        toast.textContent = message;
-        toast.classList.add("show");
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
-      }
-
-      function showNotifications() {
-        const panel = $("#notificationsPanel");
-        panel.hidden = !panel.hidden;
-      }
-
-      $("#postText").addEventListener("input", event => {
-        event.target.style.height = "auto";
-        event.target.style.height = `${Math.min(event.target.scrollHeight, 180)}px`;
-        updateComposer();
-      });
-
-      $$(".poll-input").forEach(input => input.addEventListener("input", updateComposer));
-      $("#publishBtn").addEventListener("click", publishPost);
-      $("#attachImage").addEventListener("click", () => $("#imageInput").click());
-      $("#imageInput").addEventListener("change", event => event.target.files[0] && resizeImage(event.target.files[0]));
-
-      $("#removeImage").addEventListener("click", () => {
-        pendingImage = "";
-        $("#composerPreview").hidden = true;
-        $("#imageInput").value = "";
-        updateComposer();
-      });
-
-      $("#togglePoll").addEventListener("click", () => {
-        pollMode = !pollMode;
-        pendingImage = "";
-        $("#composerPreview").hidden = true;
-        $("#imageInput").value = "";
-        $("#pollBuilder").hidden = !pollMode;
-        $("#togglePoll").classList.toggle("active", pollMode);
-        if (pollMode) $(".poll-input").focus();
-        updateComposer();
-      });
-
-      $("#feed").addEventListener("click", async event => {
-        const button = event.target.closest("[data-action]");
-        if (!button) return;
-
-        const card = button.closest(".post-card");
-        if (!card) return;
-        const post = posts.find(item => item.id === card.dataset.id);
-        if (!post) return;
-
-        const action = button.dataset.action;
-
-        if (action === "like") {
-          post.liked = !post.liked;
-          post.likes += post.liked ? 1 : -1;
-          savePosts();
-          renderPosts();
-        }
-
-        if (action === "save") {
-          post.saved = !post.saved;
-          savePosts();
-          renderPosts();
-          showToast(post.saved ? "تم حفظ المنشور" : "أزيل من المحفوظات");
-        }
-
-        if (action === "comments") {
-          openComments.has(post.id) ? openComments.delete(post.id) : openComments.add(post.id);
-          renderPosts();
-          if (openComments.has(post.id)) {
-            requestAnimationFrame(() => {
-              document.querySelector(`[data-id="${post.id}"] .comment-form input`)?.focus();
-            });
-          }
-        }
-
-        if (action === "add-comment") {
-          const input = card.querySelector(".comment-form input");
-          const text = input.value.trim();
-          if (!text) return;
-          post.comments = post.comments || [];
-          post.comments.push({ author: "زائر وصلة", initials: "ز", text });
-          openComments.add(post.id);
-          savePosts();
-          renderPosts();
-          showToast("تمت إضافة تعليقك");
-        }
-
-        if (action === "vote") {
-          const option = Number(button.dataset.option);
-          if (post.poll.userVote !== null) post.poll.options[post.poll.userVote].votes--;
-          post.poll.options[option].votes++;
-          post.poll.userVote = option;
-          savePosts();
-          renderPosts();
-        }
-
-        if (action === "share") {
-          const shareData = { title: "وصلة", text: post.text || "منشور من وصلة", url: location.href };
-          try {
-            if (navigator.share) await navigator.share(shareData);
-            else {
-              await navigator.clipboard.writeText(location.href);
-              showToast("تم نسخ رابط المنشور");
-            }
-          } catch {}
-        }
-
-        if (action === "more") showToast("خيارات المنشور");
-      });
-
-      $("#feed").addEventListener("keydown", event => {
-        if (event.key === "Enter" && event.target.matches(".comment-form input")) {
-          event.preventDefault();
-          event.target.closest(".comment-form").querySelector("[data-action='add-comment']").click();
-        }
-      });
-
-      $$("[data-view]").forEach(button => button.addEventListener("click", () => setActiveView(button.dataset.view)));
-
-      $$(".feed-tab").forEach(button => button.addEventListener("click", () => {
-        currentSort = button.dataset.sort;
-        $$(".feed-tab").forEach(tab => tab.classList.toggle("active", tab === button));
-        renderPosts();
-      }));
-
-      function handleSearch(value) {
-        searchTerm = value;
-        $("#searchInput").value = value;
-        $("#mobileSearch").value = value;
-        renderPosts();
-      }
-
-      $("#searchInput").addEventListener("input", event => handleSearch(event.target.value));
-      $("#mobileSearch").addEventListener("input", event => handleSearch(event.target.value));
-
-      $$(".trend").forEach(button => button.addEventListener("click", () => {
-        handleSearch(button.dataset.trend);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }));
-
-      $$(".follow-btn").forEach(button => button.addEventListener("click", () => {
-        button.classList.toggle("following");
-        button.textContent = button.classList.contains("following") ? "تتابعه" : "متابعة";
-      }));
-
-      $("#notificationBtn").addEventListener("click", event => {
-        event.stopPropagation();
-        showNotifications();
-      });
-
-      $("#sideNotifications").addEventListener("click", showNotifications);
-      $("#mobileNotifications").addEventListener("click", showNotifications);
-
-      $("#readAll").addEventListener("click", () => {
-        $("#notificationBadge").hidden = true;
-        $(".nav-link .count")?.remove();
-        showToast("تم تحديد الإشعارات كمقروءة");
-      });
-
-      document.addEventListener("click", event => {
-        if (!event.target.closest(".top-actions") && !event.target.closest("#sideNotifications") && !event.target.closest("#mobileNotifications")) {
-          $("#notificationsPanel").hidden = true;
-        }
-      });
-
-      $("#mobileAdd").addEventListener("click", () => {
-        $("#composer").scrollIntoView({ behavior: "smooth", block: "center" });
-        setTimeout(() => $("#postText").focus(), 350);
-      });
-
-      const savedTheme = localStorage.getItem(THEME_KEY);
-      if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-
-      function updateThemeIcon() {
-        const dark = document.documentElement.dataset.theme === "dark";
-        $("#themeBtn use").setAttribute("href", dark ? "#i-sun" : "#i-moon");
-      }
-
-      $("#themeBtn").addEventListener("click", () => {
-        const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        document.documentElement.dataset.theme = next;
-        localStorage.setItem(THEME_KEY, next);
-        updateThemeIcon();
-      });
-
-      function openStory(name, text) {
-        $("#storyName").textContent = name;
-        $("#storyAvatar").textContent = name.charAt(0);
-        $("#storyText").textContent = text;
-        $("#storyModal").hidden = false;
-        const oldProgress = $("#storyProgress");
-        const progress = oldProgress.cloneNode(true);
-        oldProgress.replaceWith(progress);
-      }
-
-      $$(".story[data-story]").forEach(story => story.addEventListener("click", () => {
-        openStory(story.dataset.story, story.dataset.storyText);
-      }));
-
-      $("#addStory").addEventListener("click", () => {
-        openStory("قصتك", "شارك يومك بسهولة. يمكنك الآن نشر قصتك دون إنشاء حساب ✨");
-      });
-
-      $("#closeStory").addEventListener("click", () => $("#storyModal").hidden = true);
-      $("#storyModal").addEventListener("click", event => {
-        if (event.target === $("#storyModal")) $("#storyModal").hidden = true;
-      });
-
-      document.addEventListener("keydown", event => {
-        if (event.key === "Escape") {
-          $("#storyModal").hidden = true;
-          $("#notificationsPanel").hidden = true;
-        }
-      });
-
-      updateThemeIcon();
-      updateComposer();
-      renderPosts();
-    })();
+    console.log('تيك فوري | تواصل فوري أونلاين بدون تسجيل');
+    console.log('أونلاين الآن: ' + state.currentOnlineCount + ' مشترك');
   </script>
 </body>
 </html>
